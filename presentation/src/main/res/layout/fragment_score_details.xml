@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Score Name"
+        android:ems="8"
+        android:id="@+id/scoreNameText"
+        android:layout_alignParentTop="true"
+        android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:id="@+id/scoreJackpotText"
+        tools:text="987654"
+        android:layout_below="@+id/scoreNameText"
+        android:layout_alignLeft="@+id/scoreNameText"
+        android:layout_alignStart="@+id/scoreNameText"
+        android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:id="@+id/scoreDateText"
+        android:layout_below="@+id/scoreJackpotText"
+        android:layout_alignLeft="@+id/scoreJackpotText"
+        android:layout_alignStart="@+id/scoreJackpotText"
+        tools:text="04/05/2016T16:45"
+        android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+</RelativeLayout>

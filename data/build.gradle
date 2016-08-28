@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+
+    defaultConfig {
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+    }
+}
+
+dependencies {
+    def moduleDependencies = rootProject.ext.moduleDependencies
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile project(path: ':domain')
+    compile moduleDependencies.appCompatV7
+    //Dagger2
+    apt moduleDependencies.daggerCompiler
+    provided moduleDependencies.javaxAnnotation
+    compile moduleDependencies.dagger
+
+    //RxJava
+    compile moduleDependencies.rxAndroid
+    compile moduleDependencies.rxJava
+
+    provided moduleDependencies.javaxAnnotation
+}
+
