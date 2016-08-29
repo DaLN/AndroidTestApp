@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidDeveloperTest</string>
-    <string name="user_s_avatar">User\'s avatar</string>
+    <string name="app_name">Android Developer Test</string>
+    <string name="user_avatar">User\'s avatar</string>
     <string name="btn_text_retry">Load data</string>
 </resources>
