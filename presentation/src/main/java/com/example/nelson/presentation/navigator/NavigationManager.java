@@ -18,6 +18,12 @@ import javax.inject.Singleton;
 @Singleton
 public class NavigationManager {
 
+  public static final String NAME_FRAGMENT_ARGUMENT = "name";
+  public static final String JACKPOT_FRAGMENT_ARGUMENT = "jackpot";
+  public static final String DATE_FRAGMENT_ARGUMENT = "date";
+
+  public static final String DATE_PATTERN = "dd/MM/yyyy HH:mm";
+
   @Inject
   public NavigationManager() {
   }
@@ -32,9 +38,9 @@ public class NavigationManager {
       DetailFragment detailFragment = new DetailFragment();
 
       Bundle args = new Bundle();
-      args.putString("name", score.getName());
-      args.putString("jackpot", score.getJackpot());
-      args.putString("date", score.getDate());
+      args.putString(NAME_FRAGMENT_ARGUMENT, score.getName());
+      args.putString(JACKPOT_FRAGMENT_ARGUMENT, score.getJackpot());
+      args.putString(DATE_FRAGMENT_ARGUMENT, score.getDate().toString(DATE_PATTERN));
       detailFragment.setArguments(args);
 
 

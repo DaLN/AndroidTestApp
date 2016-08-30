@@ -22,10 +22,7 @@ public class DevTestApplication extends Application {
     devTestApplication = this;
 
     testAppComponent = DaggerTestAppComponent.create();
-    // If a Dagger 2 component does not have any constructor arguments for any of its modules,
-    // then we can use .create() as a shortcut instead:
-    //  mNetComponent = com.codepath.dagger.components.DaggerNetComponent.create();
-    ButterKnife.setDebug(BuildConfig.DEBUG);
+    //ButterKnife.setDebug(BuildConfig.DEBUG);
   }
 
   public static DevTestApplication getDevTestApplication() {

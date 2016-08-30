@@ -3,6 +3,8 @@ package com.example.nelson.presentation.presenter;
 import android.util.Log;
 
 import com.example.nelson.domain.GameData;
+import com.example.nelson.domain.exception.DefaultErrorBundle;
+import com.example.nelson.domain.interactor.DefaultSubscriber;
 import com.example.nelson.presentation.mapper.ScoreModelDataMapper;
 import com.example.nelson.presentation.model.GameDataModel;
 import com.example.nelson.presentation.model.ScoreModel;
@@ -14,7 +16,7 @@ import rx.Subscriber;
 /**
  * Created by Nelson on 14/08/2016.
  */
-public class GameDataResponseSubscriber extends Subscriber<GameData> {
+public class GameDataResponseSubscriber extends DefaultSubscriber<GameData> {
 
 
   private MainPresenter mainPresenter;
@@ -31,7 +33,6 @@ public class GameDataResponseSubscriber extends Subscriber<GameData> {
    */
   @Override
   public void onCompleted() {
-    Log.d("NELSON", "GameDataResponseSubscriber onCompleted");
   }
 
   /**
@@ -39,16 +40,15 @@ public class GameDataResponseSubscriber extends Subscriber<GameData> {
    */
   @Override
   public void onError(Throwable e) {
-    Log.e("NELSON", e.getLocalizedMessage(), e);
-    //view.showRxFailure(e);
+    mainPresenter.showErrorMessage(new DefaultErrorBundle((Exception) e));
   }
+
 
   /**
    * {@inheritDoc}
    */
   @Override
   public void onNext(GameData gameData) {
-    //view.showRxResults(gameDataEntity);
     mainPresenter.updateViewWithScores(
         (List<ScoreModel>) scoreModelDataMapper.transform(gameData.getScoreList()));
   }

@@ -46,7 +46,7 @@ public class HeaderInfoModel {
             "playerName='" + playerName + '\'' +
             ", balance=" + balance +
             ", avatarURL=" + avatarURL +
-            ", lastLogindate=" + lastLogindate +
+            ", lastLogindate=" + lastLogindate.toString() +
             '}';
     }
 }

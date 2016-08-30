@@ -3,6 +3,7 @@ package com.example.nelson.presentation.presenter;
 import android.util.Log;
 
 import com.example.nelson.domain.HeaderInfo;
+import com.example.nelson.domain.exception.DefaultErrorBundle;
 import com.example.nelson.domain.interactor.DefaultSubscriber;
 import com.example.nelson.presentation.mapper.HeaderInfoModelDataMapper;
 import com.example.nelson.presentation.model.HeaderInfoModel;
@@ -26,7 +27,6 @@ public class HeaderInfoResponseSubscriber extends DefaultSubscriber<HeaderInfo> 
    */
   @Override
   public void onCompleted() {
-    Log.d("NELSON", "GameDataResponseSubscriber onCompleted");
   }
 
   /**
@@ -34,8 +34,7 @@ public class HeaderInfoResponseSubscriber extends DefaultSubscriber<HeaderInfo> 
    */
   @Override
   public void onError(Throwable e) {
-    Log.e("NELSON", e.getLocalizedMessage(), e);
-    //view.showRxFailure(e);
+    mainPresenter.showErrorMessage(new DefaultErrorBundle((Exception) e));
   }
 
   /**
@@ -43,7 +42,6 @@ public class HeaderInfoResponseSubscriber extends DefaultSubscriber<HeaderInfo> 
    */
   @Override
   public void onNext(HeaderInfo headerInfo) {
-    //view.showRxResults(gameDataResponse);
     mainPresenter.updateActivityWithHeaderInfo(headerInfoModelDataMapper.transform(headerInfo));
   }
 }

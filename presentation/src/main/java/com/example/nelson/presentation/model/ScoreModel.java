@@ -1,5 +1,7 @@
 package com.example.nelson.presentation.model;
 
+import org.joda.time.DateTime;
+
 /**
  * Created by Nelson on 14/08/2016.
  */
@@ -8,9 +10,9 @@ public class ScoreModel {
 
   String jackpot;
 
-  String date;
+  DateTime date;
 
-  public ScoreModel(String name, String jackpot, String date) {
+  public ScoreModel(String name, String jackpot, DateTime date) {
     this.name = name;
     this.jackpot = jackpot;
     this.date = date;
@@ -24,7 +26,7 @@ public class ScoreModel {
     return jackpot;
   }
 
-  public String getDate() {
+  public DateTime getDate() {
     return date;
   }
 
@@ -33,7 +35,7 @@ public class ScoreModel {
     return "ScoreModel{"
         + "name='" + name + '\''
         + ", jackpot='" + jackpot + '\''
-        + ", date='" + date + '\''
+        + ", date='" + date.toString() + '\''
         + '}';
   }
 }

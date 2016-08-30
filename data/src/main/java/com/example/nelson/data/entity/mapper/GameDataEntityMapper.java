@@ -5,6 +5,10 @@ import com.example.nelson.data.entity.ScoreEntity;
 import com.example.nelson.domain.GameData;
 import com.example.nelson.domain.Score;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatterBuilder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -47,8 +51,9 @@ public class GameDataEntityMapper {
   public List<Score> transform(Collection<ScoreEntity> userEntityCollection) {
     List<Score> scores = new ArrayList<>(userEntityCollection.size());
     for (ScoreEntity scoreEntity : userEntityCollection) {
-      scores.add(
-          new Score(scoreEntity.getName(), scoreEntity.getJackpot(), scoreEntity.getDate()));
+      DateTime date = DateTime.parse(scoreEntity.getDate(),
+          DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssZZ"));
+      scores.add(new Score(scoreEntity.getName(), scoreEntity.getJackpot(), date));
     }
     return scores;
   }

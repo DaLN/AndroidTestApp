@@ -2,6 +2,8 @@ package com.example.nelson.domain;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.DateTime;
+
 /**
  * Created by Nelson on 14/08/2016.
  */
@@ -13,9 +15,9 @@ public class Score {
   String jackpot;
 
   @SerializedName("date")
-  String date;
+  DateTime date;
 
-  public Score(String name, String jackpot, String date) {
+  public Score(String name, String jackpot, DateTime date) {
     this.name = name;
     this.jackpot = jackpot;
     this.date = date;
@@ -29,7 +31,7 @@ public class Score {
     return jackpot;
   }
 
-  public String getDate() {
+  public DateTime getDate() {
     return date;
   }
 
@@ -38,7 +40,7 @@ public class Score {
     return "Score{"
         + "name='" + name + '\''
         + ", jackpot='" + jackpot + '\''
-        + ", date='" + date + '\''
+        + ", date='" + date.toString() + '\''
         + '}';
   }
 }

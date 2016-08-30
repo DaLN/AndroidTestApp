@@ -7,6 +7,9 @@ import com.example.nelson.domain.GameData;
 import com.example.nelson.domain.HeaderInfo;
 import com.example.nelson.domain.Score;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,9 +36,11 @@ public class HeaderInfoEntityMapper {
   public HeaderInfo transform(HeaderInfoEntity headerInfoEntity) {
     HeaderInfo headerInfo = null;
     if (headerInfoEntity != null) {
+
+      DateTime date = DateTime.parse(headerInfoEntity.getLastLogindate(),
+          DateTimeFormat.forPattern("dd/MM/yyyy'T'HH:mm"));
       headerInfo = new HeaderInfo(headerInfoEntity.getPlayerName(),
-          headerInfoEntity.getBalance(), headerInfoEntity.getAvatarURL(),
-          headerInfoEntity.getLastLogindate());
+          headerInfoEntity.getBalance(), headerInfoEntity.getAvatarURL(),date);
     }
     return headerInfo;
   }

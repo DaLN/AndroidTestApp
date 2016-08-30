@@ -51,12 +51,7 @@ public class ScoreListAdapter extends ArrayAdapter<ScoreModel> {
     TextView textView;
 
     ViewHolder(View view) {
-      Log.d("NELSON", "ViewHolder Constructor");
       ButterKnife.bind(this, view);
-      Log.d("NELSON", "ViewHolder, textView = " + textView
-      + ", view.findViewById(R.id.gameDataListTextItem) = "
-          + view.findViewById(R.id.gameDataListTextItem));
-      //textView = (TextView) view.findViewById(R.id.gameDataListTextItem);
     }
   }
 }

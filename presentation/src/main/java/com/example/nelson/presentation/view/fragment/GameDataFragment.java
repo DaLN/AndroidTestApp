@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,33 @@ public class GameDataFragment extends ListFragment implements ScoreListView {
   public GameDataFragment() {
   }
 
-
-
+  @Nullable
   @Override
-  public void onResume() {
-    super.onResume();
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+    RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.fragment_gamedata, container, false);
+    if (getActivity() != null && this.isAdded()) {
+      setListAdapter(adapter = new ScoreListAdapter(getActivity(), R.layout.fragment_item));
+    }
     DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
-    ButterKnife.bind(this, getActivity());
-    mainPresenter.setLoadDataView(this);
+    ButterKnife.bind(this, view);
+    return view;
   }
+
+  /**
+   * Attach to list view once the view hierarchy has been created.
+   *
+   * @param view
+   * @param savedInstanceState
+   */
+  @Override
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    mainPresenter.setLoadDataView(this);
+    mainPresenter.callData();
+  }
+
 
   @Override
   public void onListItemClick(ListView listView, View view, int position, long id) {
@@ -64,17 +83,6 @@ public class GameDataFragment extends ListFragment implements ScoreListView {
     ScoreModel score = adapter.getItem(position);
 
     NavigationManager.navigateToScoreDetails(getActivity(), score);
-  }
-
-  @Nullable
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    ListView view = (ListView) inflater.inflate(R.layout.fragment_gamedata, container, false);
-    if (getActivity() != null && this.isAdded()) {
-      setListAdapter(adapter = new ScoreListAdapter(getActivity(), R.layout.fragment_item));
-    }
-    return view;
   }
 
   /**
@@ -88,14 +96,14 @@ public class GameDataFragment extends ListFragment implements ScoreListView {
 
   @Override
   public void showLoading() {
+    Log.d("NELSON", "showLoading, viewProgress = " + viewProgress);
     this.viewProgress.setVisibility(View.VISIBLE);
-    this.getActivity().setProgressBarIndeterminateVisibility(true);
   }
 
   @Override
   public void hideLoading() {
+    Log.d("NELSON", "hideLoading, viewProgress = " + viewProgress);
     this.viewProgress.setVisibility(View.GONE);
-    this.getActivity().setProgressBarIndeterminateVisibility(false);
   }
 
   @Override
@@ -118,7 +126,7 @@ public class GameDataFragment extends ListFragment implements ScoreListView {
    * Get a {@link Context}.
    */
   @Override
-  public Context context() {
+  public Context getContext() {
     return null;
   }
 

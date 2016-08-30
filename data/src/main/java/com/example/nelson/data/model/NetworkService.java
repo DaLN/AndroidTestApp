@@ -9,6 +9,7 @@ import com.example.nelson.data.entity.GameDataEntity;
 import com.example.nelson.data.entity.HeaderInfoEntity;
 import com.example.nelson.data.entity.TestResponse;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
@@ -52,6 +53,7 @@ public class NetworkService {
   public NetworkService(Context context) {
     this.context = context;
     String baseUrl = "https://dl.dropboxusercontent.com/s/";
+
     Retrofit retrofit = new Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
@@ -83,7 +85,6 @@ public class NetworkService {
    */
   public Observable<? extends TestResponse> getPreparedObservable(
       Observable<? extends TestResponse> unPreparedObservable, final Class<?> clazz) {
-    Log.d("NELSON", "NetworkService getPreparedObservable");
     Observable<? extends TestResponse> preparedObservable =
         apiObservables.get(NetworkAPI.class);
 
@@ -104,10 +105,10 @@ public class NetworkService {
       });
     } else if (clazz == HeaderInfoEntity.class) {
       memory = Observable.just(headerInfoEntity);
-      disk = Observable.fromCallable(new Callable<GameDataEntity>() {
+      disk = Observable.fromCallable(new Callable<HeaderInfoEntity>() {
         @Override
-        public GameDataEntity call() throws Exception {
-          return (GameDataEntity) readFromDisk(headerinfoFilename);
+        public HeaderInfoEntity call() throws Exception {
+          return (HeaderInfoEntity) readFromDisk(headerinfoFilename);
         }
       });
     }
@@ -115,7 +116,6 @@ public class NetworkService {
     disk = disk.doOnNext(new Action1<TestResponse>() {
       @Override
       public void call(TestResponse testResponse) {
-        Log.d("NELSON", "NetworkService getPreparedObservable disk.doOnNext call");
           if (clazz == GameDataEntity.class) {
             gameDataEntity = (GameDataEntity) testResponse;
           } else if (clazz == HeaderInfoEntity.class) {
@@ -128,7 +128,6 @@ public class NetworkService {
         unPreparedObservable.doOnNext(new Action1<TestResponse>() {
           @Override
           public void call(TestResponse testResponse) {
-            Log.d("NELSON", "NetworkService getPreparedObservable unPreparedObservable.doOnNext call");
             try {
               if (clazz == GameDataEntity.class) {
                 gameDataEntity = (GameDataEntity) testResponse;
@@ -151,8 +150,6 @@ public class NetworkService {
         .first(new Func1<TestResponse, Boolean>() {
           @Override
           public Boolean call(TestResponse testResponse) {
-            Log.d("NELSON", "NetworkService getPreparedObservable source first call, testResponse= "
-                + testResponse);
             return testResponse != null && testResponse.isUpToDate();
           }
         });
@@ -167,7 +164,6 @@ public class NetworkService {
   }
 
   private void saveToDisk(TestResponse data, String fileName) throws IOException {
-    Log.d("NELSON", "NetworkService saveToDisk");
     FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
     Gson gson = new Gson();
     fos.write(gson.toJson(data).getBytes());
@@ -175,7 +171,6 @@ public class NetworkService {
   }
 
   private TestResponse readFromDisk(String fileName) throws IOException {
-    Log.d("NELSON", "NetworkService readFromDisk");
     if (!context.getFileStreamPath(fileName).exists()) {
       return null;
     }

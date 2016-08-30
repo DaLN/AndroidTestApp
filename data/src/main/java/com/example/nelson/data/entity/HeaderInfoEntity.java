@@ -2,7 +2,6 @@ package com.example.nelson.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.joda.time.DateTime;
 
 import java.net.URL;
 
@@ -21,7 +20,7 @@ public class HeaderInfoEntity extends TestResponse {
     URL avatarURL;
 
     @SerializedName("lastLogindate")
-    DateTime lastLogindate;
+    String lastLogindate;
 
 
     public HeaderInfoEntity() {
@@ -40,7 +39,7 @@ public class HeaderInfoEntity extends TestResponse {
         return avatarURL;
     }
 
-    public DateTime getLastLogindate() {
+    public String getLastLogindate() {
         return lastLogindate;
     }
 

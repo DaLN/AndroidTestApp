@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.nelson.presentation.DevTestApplication;
 import com.example.nelson.presentation.R;
 import com.example.nelson.presentation.model.HeaderInfoModel;
+import com.example.nelson.presentation.navigator.NavigationManager;
 import com.example.nelson.presentation.presenter.MainPresenter;
 import com.example.nelson.presentation.view.fragment.GameDataFragment;
 import com.squareup.picasso.Picasso;
@@ -41,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
   @Inject
   public MainActivity() {
-    DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
-    ButterKnife.bind(this);
   }
 
   /**
@@ -52,29 +51,20 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
+    ButterKnife.bind(this);
 
-    // Check that the activity is using the layout version with
-    // the fragment_container FrameLayout
+    mainPresenter.setMainActivity(this);
+
     if (findViewById(R.id.fragmentContainer) != null) {
-
-      // However, if we're being restored from a previous state,
-      // then we don't need to do anything and should return or else
-      // we could end up with overlapping fragments.
       if (savedInstanceState != null) {
         return;
       }
 
-      // Create a new Fragment to be placed in the activity layout
       GameDataFragment gameDataFragment = new GameDataFragment();
-
-      // In case this activity was started with special instructions from an
-      // Intent, pass the Intent's extras to the fragment as arguments
       gameDataFragment.setArguments(getIntent().getExtras());
-
-      // Add the fragment to the 'fragment_container' FrameLayout
       getSupportFragmentManager().beginTransaction()
           .add(R.id.fragmentContainer, gameDataFragment).commit();
-      mainPresenter.callData();
     }
 
   }
@@ -108,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
     balancePlayerView.setText(numberFormat.format(headerInfoModel.getBalance()));
 
-    lastLoginDateView.setText(headerInfoModel.getLastLogindate().toString());
+    lastLoginDateView.setText(
+        headerInfoModel.getLastLogindate().toString(NavigationManager.DATE_PATTERN));
   }
 }

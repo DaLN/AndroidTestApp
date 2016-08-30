@@ -15,6 +15,8 @@ public class ScoreEntity {
   @SerializedName("date")
   String date;
 
+  public ScoreEntity() {
+  }
 
   public String getName() {
     return name;

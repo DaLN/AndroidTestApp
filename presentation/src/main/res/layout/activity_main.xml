@@ -10,21 +10,19 @@
     tools:context="com.example.nelson.presentation.activity.MainActivity"
     android:id="@+id/activityMain">
 
-    <include layout="@layout/activity_header"/>
+    <include layout="@layout/activity_header"
+        android:id="@+id/activity_header"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/fragmentContainer">
+        android:layout_below="@+id/activity_header"
+        android:id="@+id/fragmentContainer"
+        tools:background="@color/colorPrimary">
+
     </RelativeLayout>
 
-    <include
-        layout="@layout/view_progress"
-        />
-    <include
-        layout="@layout/view_retry"
-        />
 
 </RelativeLayout>

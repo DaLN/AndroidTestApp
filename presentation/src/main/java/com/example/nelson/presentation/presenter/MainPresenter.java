@@ -1,7 +1,6 @@
 package com.example.nelson.presentation.presenter;
 
-import android.util.Log;
-
+import com.example.nelson.domain.exception.ErrorBundle;
 import com.example.nelson.domain.interactor.UseCase;
 import com.example.nelson.presentation.DevTestApplication;
 import com.example.nelson.presentation.activity.MainActivity;
@@ -13,15 +12,12 @@ import com.example.nelson.presentation.view.LoadDataView;
 import com.example.nelson.presentation.view.fragment.GameDataFragment;
 
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
-
-import rx.Subscription;
 
 /**
  * Created by Nelson on 13/08/2016.
@@ -52,7 +48,8 @@ public class MainPresenter {
   }
 
   public void callData() {
-    loadDataView.showLoading();
+    hideViewRetry();
+    showViewLoading();
     getHeaderInfoCase.execute(
         new HeaderInfoResponseSubscriber(this, new HeaderInfoModelDataMapper()));
     getGameDataCase.execute(
@@ -69,11 +66,38 @@ public class MainPresenter {
   }
 
   public void updateViewWithScores(List<ScoreModel> scores) {
+    hideViewLoading();
     this.scores = scores;
     ((GameDataFragment) loadDataView).renderScoreList(scores);
   }
 
   public void updateActivityWithHeaderInfo(HeaderInfoModel headerInfoModel) {
     mainActivity.refreshHeaderInfo(headerInfoModel);
+  }
+
+
+  public void showViewLoading() {
+    this.loadDataView.showLoading();
+  }
+
+  public void hideViewLoading() {
+    this.loadDataView.hideLoading();
+  }
+
+  public void showViewRetry() {
+    this.loadDataView.showRetry();
+  }
+
+  public void hideViewRetry() {
+    this.loadDataView.hideRetry();
+  }
+
+  public void showErrorMessage(ErrorBundle errorBundle) {
+    showViewRetry();
+    this.loadDataView.showError(errorBundle.getErrorMessage());
+  }
+
+  public void setMainActivity(MainActivity mainActivity) {
+    this.mainActivity = mainActivity;
   }
 }

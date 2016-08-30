@@ -38,5 +38,5 @@ public interface LoadDataView {
   /**
    * Get a {@link android.content.Context}.
    */
-  Context context();
+  Context getContext();
 }
