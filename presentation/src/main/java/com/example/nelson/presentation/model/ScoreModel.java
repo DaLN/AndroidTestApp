@@ -1,7 +1,5 @@
 package com.example.nelson.presentation.model;
 
-import org.joda.time.DateTime;
-
 import java.util.Date;
 
 /**

@@ -23,7 +23,6 @@ public class HeaderInfoDataRepositoryImpl implements HeaderInfoRepository {
   private HeaderInfoDataStoreFactory headerInfoDataStoreFactory;
   private HeaderInfoEntityMapper headerInfoEntityMapper;
 
-  @Inject
   public HeaderInfoDataRepositoryImpl(HeaderInfoDataStoreFactory headerInfoDataStoreFactory,
                                       HeaderInfoEntityMapper headerInfoEntityMapper) {
     this.headerInfoDataStoreFactory = headerInfoDataStoreFactory;

@@ -5,10 +5,6 @@ import com.example.nelson.data.entity.ScoreEntity;
 import com.example.nelson.domain.GameData;
 import com.example.nelson.domain.Score;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatterBuilder;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

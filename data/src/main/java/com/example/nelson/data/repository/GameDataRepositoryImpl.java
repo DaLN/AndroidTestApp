@@ -23,7 +23,6 @@ public class GameDataRepositoryImpl implements GameDataRepository {
   private GameDataStoreFactory gameDataStoreFactory;
   private GameDataEntityMapper gameDataEntityMapper;
 
-  @Inject
   public GameDataRepositoryImpl(GameDataStoreFactory gameDataStoreFactory,
                                 GameDataEntityMapper gameDataEntityMapper) {
     this.gameDataStoreFactory = gameDataStoreFactory;

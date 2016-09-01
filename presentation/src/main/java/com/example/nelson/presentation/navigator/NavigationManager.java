@@ -9,10 +9,9 @@ import com.example.nelson.presentation.R;
 import com.example.nelson.presentation.model.ScoreModel;
 import com.example.nelson.presentation.view.fragment.DetailFragment;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -48,9 +47,9 @@ public class NavigationManager {
       args.putString(JACKPOT_FRAGMENT_ARGUMENT,
           numberFormat.format(Integer.parseInt(score.getJackpot())));
 
-      DateTimeFormatter fmt =  DateTimeFormat.mediumDateTime();
-      fmt.withLocale(locale);
-      args.putString(DATE_FRAGMENT_ARGUMENT, fmt.print(score.getDate()));
+      DateFormat dateFormat =
+          SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
+      args.putString(DATE_FRAGMENT_ARGUMENT, dateFormat.format(score.getDate()));
       detailFragment.setArguments(args);
 
 

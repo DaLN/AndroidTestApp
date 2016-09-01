@@ -15,10 +15,10 @@ import com.example.nelson.presentation.presenter.MainPresenter;
 import com.example.nelson.presentation.view.fragment.GameDataFragment;
 import com.squareup.picasso.Picasso;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -103,9 +103,10 @@ public class MainActivity extends AppCompatActivity {
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
     balancePlayerView.setText(numberFormat.format(headerInfoModel.getBalance()));
 
-    DateTimeFormatter fmt =  DateTimeFormat.mediumDateTime();
-    fmt.withLocale(Locale.getDefault());
-    lastLoginDateView.setText(fmt.print(headerInfoModel.getLastLogindate()));
+    DateFormat dateFormat =
+        SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM,
+            Locale.getDefault());
+    lastLoginDateView.setText(dateFormat.format(headerInfoModel.getLastLogindate()));
   }
 
   public void showLastLoginDate() {

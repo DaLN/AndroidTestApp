@@ -1,6 +1,8 @@
 package com.example.nelson.presentation.dagger2.module;
 
 
+import android.content.Context;
+
 import com.example.nelson.data.entity.mapper.GameDataEntityMapper;
 import com.example.nelson.data.entity.mapper.HeaderInfoEntityMapper;
 import com.example.nelson.data.executor.JobExecutor;
@@ -35,5 +37,25 @@ public class DataModule {
   @Singleton
   NetworkService providesNetworkService() {
     return new NetworkService(DevTestApplication.getDevTestApplication());
+  }
+
+  @Provides
+  GameDataStoreFactory provideGameDataStoreFactory() {
+    return new GameDataStoreFactory(DevTestApplication.getDevTestApplication());
+  }
+
+  @Provides
+  HeaderInfoDataStoreFactory provideHeaderInfoDataStoreFactory() {
+    return new HeaderInfoDataStoreFactory(DevTestApplication.getDevTestApplication());
+  }
+
+  @Provides
+  GameDataEntityMapper provideGameDataEntityMapper() {
+    return new GameDataEntityMapper();
+  }
+
+  @Provides
+  HeaderInfoEntityMapper provideHeaderInfoEntityMapper() {
+    return new HeaderInfoEntityMapper();
   }
 }

@@ -1,6 +1,5 @@
 package com.example.nelson.presentation.model;
 
-import org.joda.time.DateTime;
 
 import java.net.URL;
 import java.util.Date;
