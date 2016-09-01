@@ -2,17 +2,13 @@ package com.example.nelson.data.entity.mapper;
 
 import com.example.nelson.data.entity.GameDataEntity;
 import com.example.nelson.data.entity.HeaderInfoEntity;
-import com.example.nelson.data.entity.ScoreEntity;
 import com.example.nelson.domain.GameData;
 import com.example.nelson.domain.HeaderInfo;
-import com.example.nelson.domain.Score;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,12 +29,13 @@ public class HeaderInfoEntityMapper {
    * @param headerInfoEntity Object to be transformed.
    * @return {@link HeaderInfo } if valid {@link HeaderInfoEntity} otherwise null.
    */
-  public HeaderInfo transform(HeaderInfoEntity headerInfoEntity) {
+  public HeaderInfo transform(HeaderInfoEntity headerInfoEntity) throws ParseException {
     HeaderInfo headerInfo = null;
     if (headerInfoEntity != null) {
 
-      DateTime date = DateTime.parse(headerInfoEntity.getLastLogindate(),
-          DateTimeFormat.forPattern("dd/MM/yyyy'T'HH:mm"));
+      SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy'T'HH:mm", Locale.getDefault());
+      Date date = format.parse(headerInfoEntity.getLastLogindate());
+
       headerInfo = new HeaderInfo(headerInfoEntity.getPlayerName(),
           headerInfoEntity.getBalance(), headerInfoEntity.getAvatarURL(),date);
     }

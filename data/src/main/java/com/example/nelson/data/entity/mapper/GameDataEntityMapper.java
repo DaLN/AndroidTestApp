@@ -9,9 +9,13 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -32,7 +36,7 @@ public class GameDataEntityMapper {
    * @param gameDataEntity Object to be transformed.
    * @return {@link GameData } if valid {@link GameDataEntity} otherwise null.
    */
-  public GameData transform(GameDataEntity gameDataEntity) {
+  public GameData transform(GameDataEntity gameDataEntity) throws ParseException {
     GameData gameData = null;
     if (gameDataEntity != null) {
       ArrayList<Score> scores = (ArrayList<Score>) transform(gameDataEntity.getScoreEntityList());
@@ -48,11 +52,13 @@ public class GameDataEntityMapper {
    * @param userEntityCollection Object Collection to be transformed.
    * @return List of {@link Score} if valid {@link ScoreEntity} otherwise empty list.
    */
-  public List<Score> transform(Collection<ScoreEntity> userEntityCollection) {
+  public List<Score> transform(Collection<ScoreEntity> userEntityCollection) throws ParseException {
     List<Score> scores = new ArrayList<>(userEntityCollection.size());
     for (ScoreEntity scoreEntity : userEntityCollection) {
-      DateTime date = DateTime.parse(scoreEntity.getDate(),
-          DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssZZ"));
+
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ", Locale.getDefault());
+      Date date = format.parse(scoreEntity.getDate());
+
       scores.add(new Score(scoreEntity.getName(), scoreEntity.getJackpot(), date));
     }
     return scores;

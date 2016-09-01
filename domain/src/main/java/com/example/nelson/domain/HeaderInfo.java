@@ -1,10 +1,7 @@
 package com.example.nelson.domain;
 
-import com.google.gson.annotations.SerializedName;
-
-import org.joda.time.DateTime;
-
 import java.net.URL;
+import java.util.Date;
 
 /**
  * Created by Nelson on 13/08/2016.
@@ -17,9 +14,9 @@ public class HeaderInfo {
 
     URL avatarURL;
 
-    DateTime lastLogindate;
+    Date lastLogindate;
 
-    public HeaderInfo(String playerName, int balance, URL avatarURL, DateTime lastLogindate) {
+    public HeaderInfo(String playerName, int balance, URL avatarURL, Date lastLogindate) {
         this.playerName = playerName;
         this.balance = balance;
         this.avatarURL = avatarURL;
@@ -38,7 +35,7 @@ public class HeaderInfo {
         return avatarURL;
     }
 
-    public DateTime getLastLogindate() {
+    public Date getLastLogindate() {
         return lastLogindate;
     }
 

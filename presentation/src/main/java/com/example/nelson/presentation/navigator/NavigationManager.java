@@ -9,6 +9,12 @@ import com.example.nelson.presentation.R;
 import com.example.nelson.presentation.model.ScoreModel;
 import com.example.nelson.presentation.view.fragment.DetailFragment;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -21,8 +27,6 @@ public class NavigationManager {
   public static final String NAME_FRAGMENT_ARGUMENT = "name";
   public static final String JACKPOT_FRAGMENT_ARGUMENT = "jackpot";
   public static final String DATE_FRAGMENT_ARGUMENT = "date";
-
-  public static final String DATE_PATTERN = "dd/MM/yyyy HH:mm";
 
   @Inject
   public NavigationManager() {
@@ -39,8 +43,14 @@ public class NavigationManager {
 
       Bundle args = new Bundle();
       args.putString(NAME_FRAGMENT_ARGUMENT, score.getName());
-      args.putString(JACKPOT_FRAGMENT_ARGUMENT, score.getJackpot());
-      args.putString(DATE_FRAGMENT_ARGUMENT, score.getDate().toString(DATE_PATTERN));
+      Locale locale = Locale.getDefault();
+      NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+      args.putString(JACKPOT_FRAGMENT_ARGUMENT,
+          numberFormat.format(Integer.parseInt(score.getJackpot())));
+
+      DateTimeFormatter fmt =  DateTimeFormat.mediumDateTime();
+      fmt.withLocale(locale);
+      args.putString(DATE_FRAGMENT_ARGUMENT, fmt.print(score.getDate()));
       detailFragment.setArguments(args);
 
 

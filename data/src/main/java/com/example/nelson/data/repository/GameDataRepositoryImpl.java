@@ -7,6 +7,8 @@ import com.example.nelson.data.repository.datasource.GameDataStoreFactory;
 import com.example.nelson.domain.GameData;
 import com.example.nelson.domain.repository.GameDataRepository;
 
+import java.text.ParseException;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -33,7 +35,12 @@ public class GameDataRepositoryImpl implements GameDataRepository {
     return gameDataStore.gameDataEntity().map(new Func1<GameDataEntity, GameData>() {
       @Override
       public GameData call(GameDataEntity gameDataEntity) {
-        return gameDataEntityMapper.transform(gameDataEntity);
+        try {
+          return gameDataEntityMapper.transform(gameDataEntity);
+        } catch (ParseException e) {
+          //RxJava will catch the error.
+          throw new RuntimeException(e.getLocalizedMessage(), e);
+        }
       }
     });
 

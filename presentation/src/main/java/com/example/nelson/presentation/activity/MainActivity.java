@@ -2,6 +2,7 @@ package com.example.nelson.presentation.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,11 @@ import com.example.nelson.presentation.presenter.MainPresenter;
 import com.example.nelson.presentation.view.fragment.GameDataFragment;
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -98,7 +103,16 @@ public class MainActivity extends AppCompatActivity {
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
     balancePlayerView.setText(numberFormat.format(headerInfoModel.getBalance()));
 
-    lastLoginDateView.setText(
-        headerInfoModel.getLastLogindate().toString(NavigationManager.DATE_PATTERN));
+    DateTimeFormatter fmt =  DateTimeFormat.mediumDateTime();
+    fmt.withLocale(Locale.getDefault());
+    lastLoginDateView.setText(fmt.print(headerInfoModel.getLastLogindate()));
+  }
+
+  public void showLastLoginDate() {
+    this.lastLoginDateView.setVisibility(View.VISIBLE);
+  }
+
+  public void hideLastLoginDate() {
+    this.lastLoginDateView.setVisibility(View.GONE);
   }
 }

@@ -7,6 +7,8 @@ import com.example.nelson.data.repository.datasource.HeaderInfoDataStoreFactory;
 import com.example.nelson.domain.HeaderInfo;
 import com.example.nelson.domain.repository.HeaderInfoRepository;
 
+import java.text.ParseException;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -33,7 +35,12 @@ public class HeaderInfoDataRepositoryImpl implements HeaderInfoRepository {
     return headerInfoDataStore.headerInfoEntity().map(new Func1<HeaderInfoEntity, HeaderInfo>() {
       @Override
       public HeaderInfo call(HeaderInfoEntity headerInfoEntity) {
-        return headerInfoEntityMapper.transform(headerInfoEntity);
+        try {
+          return headerInfoEntityMapper.transform(headerInfoEntity);
+        } catch (ParseException e) {
+          //RxJava will catch the error.
+          throw new RuntimeException(e.getLocalizedMessage(), e);
+        }
       }
     });
 

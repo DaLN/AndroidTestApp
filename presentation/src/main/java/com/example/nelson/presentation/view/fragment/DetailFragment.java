@@ -68,6 +68,7 @@ public class DetailFragment extends Fragment implements LoadDataView {
     DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
     ButterKnife.bind(this, getActivity());
     mainPresenter.setLoadDataView(this);
+    mainPresenter.hideLastLoginDate();
     Bundle bundle = getArguments();
     scoreNameText.setText(bundle.getString(NavigationManager.NAME_FRAGMENT_ARGUMENT));
     scoreDateText.setText(bundle.getString(NavigationManager.DATE_FRAGMENT_ARGUMENT));
@@ -135,5 +136,15 @@ public class DetailFragment extends Fragment implements LoadDataView {
   @Override
   public Context getContext() {
     return null;
+  }
+
+  /**
+   * Called when the fragment is no longer attached to its activity.  This
+   * is called after {@link #onDestroy()}.
+   */
+  @Override
+  public void onDetach() {
+    super.onDetach();
+    mainPresenter.showLastLoginDate();
   }
 }

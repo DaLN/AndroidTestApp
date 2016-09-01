@@ -44,9 +44,6 @@ dependencies {
 
     provided moduleDependencies.javaxAnnotation
 
-    //To use Datetime
-    compile moduleDependencies.jodaTime
-
     //Picasso
     compile moduleDependencies.picasso
 

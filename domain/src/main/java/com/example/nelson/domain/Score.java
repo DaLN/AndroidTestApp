@@ -1,23 +1,18 @@
 package com.example.nelson.domain;
 
-import com.google.gson.annotations.SerializedName;
-
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Created by Nelson on 14/08/2016.
  */
 public class Score {
-  @SerializedName("name")
   String name;
 
-  @SerializedName("jackpot")
   String jackpot;
 
-  @SerializedName("date")
-  DateTime date;
+  Date date;
 
-  public Score(String name, String jackpot, DateTime date) {
+  public Score(String name, String jackpot, Date date) {
     this.name = name;
     this.jackpot = jackpot;
     this.date = date;
@@ -31,7 +26,7 @@ public class Score {
     return jackpot;
   }
 
-  public DateTime getDate() {
+  public Date getDate() {
     return date;
   }
 

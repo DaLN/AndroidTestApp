@@ -1,5 +1,7 @@
 package com.example.nelson.presentation.presenter;
 
+import android.view.View;
+
 import com.example.nelson.domain.exception.ErrorBundle;
 import com.example.nelson.domain.interactor.UseCase;
 import com.example.nelson.presentation.DevTestApplication;
@@ -56,6 +58,9 @@ public class MainPresenter {
         new GameDataResponseSubscriber(this, new ScoreModelDataMapper()));
   }
 
+
+
+
   public void rxUnSubscribe() {
     if (getGameDataCase != null) {
       getGameDataCase.unsubscribe();
@@ -95,6 +100,14 @@ public class MainPresenter {
   public void showErrorMessage(ErrorBundle errorBundle) {
     showViewRetry();
     this.loadDataView.showError(errorBundle.getErrorMessage());
+  }
+
+  public void showLastLoginDate() {
+    this.mainActivity.showLastLoginDate();
+  }
+
+  public void hideLastLoginDate() {
+    this.mainActivity.hideLastLoginDate();
   }
 
   public void setMainActivity(MainActivity mainActivity) {

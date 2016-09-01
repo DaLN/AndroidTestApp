@@ -2,6 +2,8 @@ package com.example.nelson.presentation.model;
 
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 /**
  * Created by Nelson on 14/08/2016.
  */
@@ -10,9 +12,9 @@ public class ScoreModel {
 
   String jackpot;
 
-  DateTime date;
+  Date date;
 
-  public ScoreModel(String name, String jackpot, DateTime date) {
+  public ScoreModel(String name, String jackpot, Date date) {
     this.name = name;
     this.jackpot = jackpot;
     this.date = date;
@@ -26,7 +28,7 @@ public class ScoreModel {
     return jackpot;
   }
 
-  public DateTime getDate() {
+  public Date getDate() {
     return date;
   }
 
