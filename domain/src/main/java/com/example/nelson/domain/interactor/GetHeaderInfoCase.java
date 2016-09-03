@@ -19,7 +19,6 @@ public class GetHeaderInfoCase extends UseCase {
 
   private final HeaderInfoRepository headerInfoRepository;
 
-  @Inject
   public GetHeaderInfoCase(HeaderInfoRepository headerInfoRepository,
                            ThreadExecutor threadExecutor,
                            PostExecutionThread postExecutionThread) {

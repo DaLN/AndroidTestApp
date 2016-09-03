@@ -1,7 +1,5 @@
 package com.example.nelson.presentation.dagger2.component;
 
-import android.provider.ContactsContract;
-
 import com.example.nelson.data.model.NetworkService;
 import com.example.nelson.presentation.activity.MainActivity;
 import com.example.nelson.presentation.dagger2.module.DataModule;
@@ -21,8 +19,10 @@ import dagger.Component;
  * Created by Nelson on 16/08/2016.
  */
 @Singleton
-@Component(modules = {DomainModule.class, DataModule.class})
+@Component(modules = {PresentationModule.class, DomainModule.class, DataModule.class})
 public interface TestAppComponent {
+
+  MainPresenter mainPresenter();
   void inject(MainActivity mainActivity);
   void inject(MainPresenter mainActivity);
   void inject(GameDataFragment gameDataFragment);

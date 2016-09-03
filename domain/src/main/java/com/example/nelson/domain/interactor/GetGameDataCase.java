@@ -17,7 +17,6 @@ public class GetGameDataCase extends UseCase {
 
   private final GameDataRepository gameDataRepository;
 
-  @Inject
   public GetGameDataCase(GameDataRepository gameDataRepository, ThreadExecutor threadExecutor,
                          PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);

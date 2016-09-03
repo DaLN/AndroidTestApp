@@ -16,7 +16,6 @@ public class GameDataStoreFactory {
 
   private final Context context;
 
-  @Inject
   public GameDataStoreFactory(@NonNull Context context) {
     this.context = context.getApplicationContext();
   }

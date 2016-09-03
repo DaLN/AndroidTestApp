@@ -50,16 +50,20 @@ dependencies {
     /**
      * Tests
      */
-
+    //TODO investigate androidTestCompile and testCompile
     //Mockito
-    androidTestCompile moduleDependencies.mockito
-    androidTestCompile moduleDependencies.dexmaker
-    androidTestCompile moduleDependencies.dexmakerMockito
+    //testCompile  moduleDependencies.mockito
+    //testCompile  moduleDependencies.dexmaker
+    //testCompile  moduleDependencies.dexmakerDx
+    //testCompile  moduleDependencies.dexmakerMockito
 
     //Espresso
-    androidTestCompile moduleDependencies.espresso
+    testCompile  moduleDependencies.espresso
 
-    androidTestCompile moduleDependencies.testingSupportLib
+    //DaggerMock
+    testCompile  moduleDependencies.daggerMock
+
+    testCompile moduleDependencies.testingSupportLib
 
     /**
      * Development

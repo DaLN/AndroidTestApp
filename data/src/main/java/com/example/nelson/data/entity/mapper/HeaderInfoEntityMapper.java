@@ -20,7 +20,6 @@ import javax.inject.Singleton;
 @Singleton
 public class HeaderInfoEntityMapper {
 
-  @Inject
   public HeaderInfoEntityMapper() {}
 
   /**

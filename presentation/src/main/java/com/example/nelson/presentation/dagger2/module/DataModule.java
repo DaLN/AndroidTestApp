@@ -35,27 +35,27 @@ public class DataModule {
 
   @Provides
   @Singleton
-  NetworkService providesNetworkService() {
+  public NetworkService providesNetworkService() {
     return new NetworkService(DevTestApplication.getDevTestApplication());
   }
 
   @Provides
-  GameDataStoreFactory provideGameDataStoreFactory() {
-    return new GameDataStoreFactory(DevTestApplication.getDevTestApplication());
+  public GameDataStoreFactory provideGameDataStoreFactory(Context context) {
+    return new GameDataStoreFactory(context);
   }
 
   @Provides
-  HeaderInfoDataStoreFactory provideHeaderInfoDataStoreFactory() {
+  public HeaderInfoDataStoreFactory provideHeaderInfoDataStoreFactory() {
     return new HeaderInfoDataStoreFactory(DevTestApplication.getDevTestApplication());
   }
 
   @Provides
-  GameDataEntityMapper provideGameDataEntityMapper() {
+  public GameDataEntityMapper provideGameDataEntityMapper() {
     return new GameDataEntityMapper();
   }
 
   @Provides
-  HeaderInfoEntityMapper provideHeaderInfoEntityMapper() {
+  public HeaderInfoEntityMapper provideHeaderInfoEntityMapper() {
     return new HeaderInfoEntityMapper();
   }
 }

@@ -49,7 +49,6 @@ public class NetworkService {
 
   private Context context;
 
-  @Inject
   public NetworkService(Context context) {
     this.context = context;
     String baseUrl = "https://dl.dropboxusercontent.com/s/";

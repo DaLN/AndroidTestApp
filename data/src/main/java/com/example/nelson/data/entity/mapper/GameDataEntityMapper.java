@@ -23,7 +23,6 @@ import javax.inject.Singleton;
 @Singleton
 public class GameDataEntityMapper {
 
-  @Inject
   public GameDataEntityMapper() {}
 
   /**

@@ -41,7 +41,6 @@ public class MainPresenter {
                        @Named("headerInfo") UseCase getHeaderInfoCase) {
     this.getGameDataCase = getGameDataCase;
     this.getHeaderInfoCase = getHeaderInfoCase;
-    DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
     scores = Collections.emptyList();
   }
 
