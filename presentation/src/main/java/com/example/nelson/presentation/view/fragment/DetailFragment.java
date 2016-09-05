@@ -13,12 +13,8 @@ import android.widget.Toast;
 
 import com.example.nelson.presentation.DevTestApplication;
 import com.example.nelson.presentation.R;
-import com.example.nelson.presentation.model.ScoreModel;
 import com.example.nelson.presentation.navigator.NavigationManager;
-import com.example.nelson.presentation.presenter.MainPresenter;
-import com.example.nelson.presentation.view.LoadDataView;
-
-import java.util.List;
+import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
 
 import javax.inject.Inject;
 
@@ -28,10 +24,10 @@ import butterknife.ButterKnife;
 /**
  * Created by Nelson on 15/08/2016.
  */
-public class DetailFragment extends Fragment implements LoadDataView {
+public class DetailFragment extends Fragment {
 
   @Inject
-  MainPresenter mainPresenter;
+  GameDataPresenterImpl mainPresenter;
 
   @BindView(R.id.scoreNameText)
   TextView scoreNameText;
@@ -67,7 +63,7 @@ public class DetailFragment extends Fragment implements LoadDataView {
     super.onActivityCreated(savedInstanceState);
     DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
     ButterKnife.bind(this, getActivity());
-    mainPresenter.setLoadDataView(this);
+    //mainPresenter.setLceView(this);
     mainPresenter.hideLastLoginDate();
     Bundle bundle = getArguments();
     scoreNameText.setText(bundle.getString(NavigationManager.NAME_FRAGMENT_ARGUMENT));
@@ -75,9 +71,6 @@ public class DetailFragment extends Fragment implements LoadDataView {
     scoreJackpotText.setText(bundle.getString(NavigationManager.JACKPOT_FRAGMENT_ARGUMENT));
   }
 
-  public void refreshScores(List<ScoreModel> scores) {
-
-  }
 
   /**
    * Shows a {@link android.widget.Toast} message.
@@ -86,48 +79,6 @@ public class DetailFragment extends Fragment implements LoadDataView {
    */
   protected void showToastMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-  }
-
-  /**
-   * Indicate that the view is loading data.
-   */
-  @Override
-  public void showLoading() {
-
-  }
-
-  /**
-   * Remove the indication that the view is loading data.
-   */
-  @Override
-  public void hideLoading() {
-
-  }
-
-  /**
-   * Indicate that the view is retrying to load the data after an error.
-   */
-  @Override
-  public void showRetry() {
-
-  }
-
-  /**
-   * Remove the indication that the view is retrying to load the data.
-   */
-  @Override
-  public void hideRetry() {
-
-  }
-
-  /**
-   * Show an error message
-   *
-   * @param message Error message.
-   */
-  @Override
-  public void showError(String message) {
-
   }
 
   /**

@@ -1,7 +1,9 @@
 package com.example.nelson.presentation.view.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -15,13 +17,17 @@ import android.widget.Toast;
 
 import com.example.nelson.presentation.DevTestApplication;
 import com.example.nelson.presentation.R;
+import com.example.nelson.presentation.dagger2.component.GameDataComponent;
+import com.example.nelson.presentation.library.ComponentCache;
+import com.example.nelson.presentation.library.ComponentControllerDelegate;
+import com.example.nelson.presentation.library.ComponentFactory;
+import com.example.nelson.presentation.model.GameDataModel;
 import com.example.nelson.presentation.model.ScoreModel;
 import com.example.nelson.presentation.navigator.NavigationManager;
-import com.example.nelson.presentation.presenter.MainPresenter;
-import com.example.nelson.presentation.view.ScoreListView;
+import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
+import com.example.nelson.presentation.view.GameDataView;
+import com.example.nelson.presentation.view.LceView;
 import com.example.nelson.presentation.view.adapter.ScoreListAdapter;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -31,21 +37,76 @@ import butterknife.ButterKnife;
 /**
  * Created by Nelson on 15/08/2016.
  */
-public class GameDataFragment extends ListFragment implements ScoreListView {
+public class GameDataFragment extends ListFragment {
 
   @Inject
-  MainPresenter mainPresenter;
+  GameDataPresenterImpl mainPresenter;
+
+  private GameDataModel gameDataModel;
 
   private ArrayAdapter<ScoreModel> adapter;
 
-  @BindView(R.id.view_progress)
-  RelativeLayout viewProgress;
+  private ComponentCache componentCache;
+  private ComponentControllerDelegate<GameDataComponent> componentDelegate =
+      new ComponentControllerDelegate<>();
 
-  @BindView(R.id.view_retry)
-  RelativeLayout viewRetry;
+  private ComponentFactory<GameDataComponent> componentFactory =
+      new ComponentFactory<GameDataComponent>() {
+        @NonNull
+        @Override
+        public GameDataComponent createComponent() {
+          return onCreateNonConfigurationComponent();
+        }
+      };
+
+  private GameDataComponent onCreateNonConfigurationComponent() {
+    return GameDataComponent.builder()
+        .appComponent(getAppComponent(getActivity()))
+        .build();
+  }
 
   @Inject
   public GameDataFragment() {
+  }
+
+
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    if (context instanceof ComponentCache) {
+      componentCache = (ComponentCache)context;
+    } else {
+      throw new RuntimeException(getClass().getSimpleName()
+          + " must be attached to "
+          + "an Activity that implements "
+          + ComponentCache.class.getSimpleName());
+    }
+  }
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    componentDelegate.onCreate(componentCache, savedInstanceState, componentFactory);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    componentDelegate.onResume();
+  }
+
+  @Override public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    componentDelegate.onSaveInstanceState(outState);
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    componentDelegate.onDestroy();
+  }
+
+  public GameDataComponent getComponent() {
+    return componentDelegate.getComponent();
   }
 
   @Nullable
@@ -71,7 +132,7 @@ public class GameDataFragment extends ListFragment implements ScoreListView {
   public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    mainPresenter.setLoadDataView(this);
+    mainPresenter.setLceView((LceView) view);
     mainPresenter.callData();
   }
 
@@ -92,52 +153,5 @@ public class GameDataFragment extends ListFragment implements ScoreListView {
    */
   protected void showToastMessage(String message) {
     Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-  }
-
-  @Override
-  public void showLoading() {
-    Log.d("NELSON", "showLoading, viewProgress = " + viewProgress);
-    this.viewProgress.setVisibility(View.VISIBLE);
-  }
-
-  @Override
-  public void hideLoading() {
-    Log.d("NELSON", "hideLoading, viewProgress = " + viewProgress);
-    this.viewProgress.setVisibility(View.GONE);
-  }
-
-  @Override
-  public void showRetry() {
-    this.viewRetry.setVisibility(View.VISIBLE);
-  }
-
-  @Override
-  public void hideRetry() {
-    this.viewRetry.setVisibility(View.GONE);
-  }
-
-  @Override
-  public void showError(String message) {
-    this.showToastMessage(message);
-  }
-
-
-  /**
-   * Get a {@link Context}.
-   */
-  @Override
-  public Context getContext() {
-    return null;
-  }
-
-  /**
-   * Render a list of scores in the UI.
-   *
-   * @param scores The list of {@link ScoreModel} that will be shown.
-   */
-  @Override
-  public void renderScoreList(List<ScoreModel> scores) {
-    adapter.clear();
-    adapter.addAll(scores);
   }
 }

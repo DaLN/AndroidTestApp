@@ -6,7 +6,7 @@ import com.example.nelson.presentation.model.ScoreModel;
  * Interface representing a View in a model view presenter (MVP) pattern.
  * In this case is used as a view representing a score details.
  */
-public interface ScoreDetailsView extends LoadDataView {
+public interface ScoreDetailsView {
 
   /**
    * Render a score details.

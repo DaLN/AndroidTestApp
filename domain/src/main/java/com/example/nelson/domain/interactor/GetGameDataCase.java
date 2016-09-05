@@ -17,9 +17,8 @@ public class GetGameDataCase extends UseCase {
 
   private final GameDataRepository gameDataRepository;
 
-  public GetGameDataCase(GameDataRepository gameDataRepository, ThreadExecutor threadExecutor,
-                         PostExecutionThread postExecutionThread) {
-    super(threadExecutor, postExecutionThread);
+  public GetGameDataCase(GameDataRepository gameDataRepository) {
+    super();
     this.gameDataRepository = gameDataRepository;
   }
 

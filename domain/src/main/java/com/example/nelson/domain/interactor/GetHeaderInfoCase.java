@@ -19,10 +19,8 @@ public class GetHeaderInfoCase extends UseCase {
 
   private final HeaderInfoRepository headerInfoRepository;
 
-  public GetHeaderInfoCase(HeaderInfoRepository headerInfoRepository,
-                           ThreadExecutor threadExecutor,
-                           PostExecutionThread postExecutionThread) {
-    super(threadExecutor, postExecutionThread);
+  public GetHeaderInfoCase(HeaderInfoRepository headerInfoRepository) {
+    super();
     this.headerInfoRepository = headerInfoRepository;
   }
 

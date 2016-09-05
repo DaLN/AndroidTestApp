@@ -1,11 +1,13 @@
 package com.example.nelson.presentation.model;
 
+import com.example.nelson.presentation.view.model.EmptyViewModel;
+
 import java.util.List;
 
 /**
  * Created by Nelson on 13/08/2016.
  */
-public class GameDataModel {
+public class GameDataModel extends EmptyViewModel {
 
   List<ScoreModel> scoreList;
 

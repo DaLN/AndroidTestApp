@@ -1,22 +1,20 @@
-package com.example.nelson.presentation.presenter;
-
-import android.util.Log;
+package com.example.nelson.presentation.presenter.subscriber;
 
 import com.example.nelson.domain.HeaderInfo;
 import com.example.nelson.domain.exception.DefaultErrorBundle;
 import com.example.nelson.domain.interactor.DefaultSubscriber;
 import com.example.nelson.presentation.mapper.HeaderInfoModelDataMapper;
-import com.example.nelson.presentation.model.HeaderInfoModel;
+import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
 
 /**
  * Created by Nelson on 14/08/2016.
  */
 public class HeaderInfoResponseSubscriber extends DefaultSubscriber<HeaderInfo> {
 
-  private MainPresenter mainPresenter;
+  private GameDataPresenterImpl mainPresenter;
   private HeaderInfoModelDataMapper headerInfoModelDataMapper;
 
-  public HeaderInfoResponseSubscriber(MainPresenter mainPresenter,
+  public HeaderInfoResponseSubscriber(GameDataPresenterImpl mainPresenter,
                                       HeaderInfoModelDataMapper headerInfoModelDataMapper) {
     this.mainPresenter = mainPresenter;
     this.headerInfoModelDataMapper = headerInfoModelDataMapper;

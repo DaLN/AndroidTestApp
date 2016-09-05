@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.example.nelson.presentation.DevTestApplication;
 import com.example.nelson.presentation.R;
+import com.example.nelson.presentation.library.ComponentCacheActivity;
 import com.example.nelson.presentation.model.HeaderInfoModel;
-import com.example.nelson.presentation.navigator.NavigationManager;
-import com.example.nelson.presentation.presenter.MainPresenter;
+import com.example.nelson.presentation.presenter.GameDataPresenter;
+import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
 import com.example.nelson.presentation.view.fragment.GameDataFragment;
+import com.example.nelson.presentation.view.fragment.HeaderInfoFragment;
 import com.squareup.picasso.Picasso;
 
 
@@ -28,22 +30,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 @Singleton
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ComponentCacheActivity {
 
   @Inject
-  MainPresenter mainPresenter;
-
-  @BindView(R.id.userAvatar)
-  ImageView userAvatarView;
-
-  @BindView(R.id.playerNameText)
-  TextView playerNameView;
-
-  @BindView(R.id.balancePlayerText)
-  TextView balancePlayerView;
-
-  @BindView(R.id.lastLoginDateText)
-  TextView lastLoginDateView;
+  GameDataPresenter mainPresenter;
 
   @Inject
   public MainActivity() {
@@ -53,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
    * {@inheritDoc}
    */
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
@@ -61,15 +51,21 @@ public class MainActivity extends AppCompatActivity {
 
     mainPresenter.setMainActivity(this);
 
-    if (findViewById(R.id.fragmentContainer) != null) {
+    if (findViewById(R.id.activity_contentContainer) != null) {
       if (savedInstanceState != null) {
         return;
       }
 
+      HeaderInfoFragment headerInfoFragment = new HeaderInfoFragment();
+      headerInfoFragment.setArguments(getIntent().getExtras());
+      headerInfoFragment.setArguments(getIntent().getExtras());
+      getSupportFragmentManager().beginTransaction()
+          .add(R.id.activity_headerContainer, headerInfoFragment).commit();
+
       GameDataFragment gameDataFragment = new GameDataFragment();
       gameDataFragment.setArguments(getIntent().getExtras());
       getSupportFragmentManager().beginTransaction()
-          .add(R.id.fragmentContainer, gameDataFragment).commit();
+          .add(R.id.activity_contentContainer, gameDataFragment).commit();
     }
 
   }

@@ -1,5 +1,7 @@
 package com.example.nelson.presentation.model;
 
+import com.example.nelson.presentation.view.model.EmptyViewModel;
+
 import java.util.Date;
 
 /**

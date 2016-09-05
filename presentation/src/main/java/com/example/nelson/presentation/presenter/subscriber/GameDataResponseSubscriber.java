@@ -1,17 +1,13 @@
-package com.example.nelson.presentation.presenter;
-
-import android.util.Log;
+package com.example.nelson.presentation.presenter.subscriber;
 
 import com.example.nelson.domain.GameData;
 import com.example.nelson.domain.exception.DefaultErrorBundle;
 import com.example.nelson.domain.interactor.DefaultSubscriber;
 import com.example.nelson.presentation.mapper.ScoreModelDataMapper;
-import com.example.nelson.presentation.model.GameDataModel;
 import com.example.nelson.presentation.model.ScoreModel;
+import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
 
 import java.util.List;
-
-import rx.Subscriber;
 
 /**
  * Created by Nelson on 14/08/2016.
@@ -19,10 +15,10 @@ import rx.Subscriber;
 public class GameDataResponseSubscriber extends DefaultSubscriber<GameData> {
 
 
-  private MainPresenter mainPresenter;
+  private GameDataPresenterImpl mainPresenter;
   private ScoreModelDataMapper scoreModelDataMapper;
 
-  public GameDataResponseSubscriber(MainPresenter mainPresenter,
+  public GameDataResponseSubscriber(GameDataPresenterImpl mainPresenter,
                                     ScoreModelDataMapper scoreModelDataMapper) {
     this.mainPresenter = mainPresenter;
     this.scoreModelDataMapper = scoreModelDataMapper;

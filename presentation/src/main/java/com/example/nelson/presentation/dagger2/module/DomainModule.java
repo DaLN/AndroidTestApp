@@ -33,18 +33,14 @@ public class DomainModule {
 
   @Provides
   @Named("gameData")
-  public UseCase provideGetGameDataCase(GameDataRepository gameDataRepository,
-                                  ThreadExecutor threadExecutor,
-                                  PostExecutionThread postExecutionThread) {
-    return new GetGameDataCase(gameDataRepository, threadExecutor, postExecutionThread);
+  public UseCase provideGetGameDataCase(GameDataRepository gameDataRepository) {
+    return new GetGameDataCase(gameDataRepository);
   }
 
   @Provides
   @Named("headerInfo")
-  public UseCase provideGetHeaderInfoCase(HeaderInfoRepository headerInfoDataRepository,
-                                    ThreadExecutor threadExecutor,
-                                    PostExecutionThread postExecutionThread) {
-    return new GetHeaderInfoCase(headerInfoDataRepository, threadExecutor, postExecutionThread);
+  public UseCase provideGetHeaderInfoCase(HeaderInfoRepository headerInfoDataRepository) {
+    return new GetHeaderInfoCase(headerInfoDataRepository);
   }
 
   @Provides

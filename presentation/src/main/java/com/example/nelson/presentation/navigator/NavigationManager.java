@@ -59,7 +59,7 @@ public class NavigationManager {
 
       // Replace whatever is in the fragment_container view with this fragment,
       // and add the transaction to the back stack
-      transaction.replace(R.id.fragmentContainer, detailFragment);
+      transaction.replace(R.id.activity_contentContainer, detailFragment);
       transaction.addToBackStack(null);
 
       // Commit the transaction

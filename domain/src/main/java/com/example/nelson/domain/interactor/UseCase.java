@@ -18,22 +18,13 @@ import rx.subscriptions.Subscriptions;
  * that will execute its job in a background thread and will post the result in the UI thread.
  */
 public abstract class UseCase {
-
-  private final ThreadExecutor threadExecutor;
-  private final PostExecutionThread postExecutionThread;
-
   private Subscription subscription = Subscriptions.empty();
 
-  protected UseCase(ThreadExecutor threadExecutor,
-      PostExecutionThread postExecutionThread) {
-    this.threadExecutor = threadExecutor;
-    this.postExecutionThread = postExecutionThread;
-  }
 
   /**
    * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
    */
-  protected abstract Observable buildUseCaseObservable();
+  public abstract Observable buildUseCaseObservable();
 
   /**
    * Executes the current use case.
@@ -42,7 +33,7 @@ public abstract class UseCase {
    * with {@link #buildUseCaseObservable()}.
    */
   @SuppressWarnings("unchecked")
-  public void execute(Subscriber useCaseSubscriber) {
+  public Observable get() {
     this.subscription = this.buildUseCaseObservable()
         .subscribeOn(Schedulers.from(threadExecutor))
         .observeOn(postExecutionThread.getScheduler())

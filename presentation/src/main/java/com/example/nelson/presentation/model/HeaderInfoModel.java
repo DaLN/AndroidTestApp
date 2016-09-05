@@ -1,13 +1,15 @@
 package com.example.nelson.presentation.model;
 
 
+import com.example.nelson.presentation.view.model.EmptyViewModel;
+
 import java.net.URL;
 import java.util.Date;
 
 /**
  * Created by Nelson on 13/08/2016.
  */
-public class HeaderInfoModel {
+public class HeaderInfoModel extends EmptyViewModel {
 
     String playerName;
 

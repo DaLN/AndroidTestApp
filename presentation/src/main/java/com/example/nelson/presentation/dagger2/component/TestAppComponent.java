@@ -5,9 +5,9 @@ import com.example.nelson.presentation.activity.MainActivity;
 import com.example.nelson.presentation.dagger2.module.DataModule;
 import com.example.nelson.presentation.dagger2.module.DomainModule;
 import com.example.nelson.presentation.dagger2.module.PresentationModule;
-import com.example.nelson.presentation.presenter.GameDataResponseSubscriber;
-import com.example.nelson.presentation.presenter.HeaderInfoResponseSubscriber;
-import com.example.nelson.presentation.presenter.MainPresenter;
+import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
+import com.example.nelson.presentation.presenter.subscriber.GameDataResponseSubscriber;
+import com.example.nelson.presentation.presenter.subscriber.HeaderInfoResponseSubscriber;
 import com.example.nelson.presentation.view.fragment.DetailFragment;
 import com.example.nelson.presentation.view.fragment.GameDataFragment;
 
@@ -22,9 +22,9 @@ import dagger.Component;
 @Component(modules = {PresentationModule.class, DomainModule.class, DataModule.class})
 public interface TestAppComponent {
 
-  MainPresenter mainPresenter();
+  GameDataPresenterImpl mainPresenter();
   void inject(MainActivity mainActivity);
-  void inject(MainPresenter mainActivity);
+  void inject(GameDataPresenterImpl mainActivity);
   void inject(GameDataFragment gameDataFragment);
   void inject(DetailFragment detailFragment);
   void inject(NetworkService networkService);

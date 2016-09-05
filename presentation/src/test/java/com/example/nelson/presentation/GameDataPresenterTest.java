@@ -18,9 +18,9 @@ import com.example.nelson.presentation.dagger2.module.DomainModule;
 import com.example.nelson.presentation.dagger2.module.PresentationModule;
 import com.example.nelson.presentation.mapper.HeaderInfoModelDataMapper;
 import com.example.nelson.presentation.mapper.ScoreModelDataMapper;
-import com.example.nelson.presentation.presenter.GameDataResponseSubscriber;
-import com.example.nelson.presentation.presenter.HeaderInfoResponseSubscriber;
-import com.example.nelson.presentation.presenter.MainPresenter;
+import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
+import com.example.nelson.presentation.presenter.subscriber.GameDataResponseSubscriber;
+import com.example.nelson.presentation.presenter.subscriber.HeaderInfoResponseSubscriber;
 import com.example.nelson.presentation.view.fragment.GameDataFragment;
 
 import org.junit.Before;
@@ -42,10 +42,10 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Nelson on 01/09/2016.
  */
-public class MainPresenterTest {
+public class GameDataPresenterTest {
 
   @InjectFromComponent
-  MainPresenter mainPresenter;
+  GameDataPresenterImpl mainPresenter;
 
   @Mock
   @Named("gameData")
@@ -99,7 +99,7 @@ public class MainPresenterTest {
 
   @Test
   public void testCallData() {
-    mainPresenter.setLoadDataView(gameDataFragment);
+    mainPresenter.setLceView(gameDataFragment);
     mainPresenter.callData();
 
     InOrder inOrder = inOrder(gameDataFragment);
