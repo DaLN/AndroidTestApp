@@ -1,5 +1,5 @@
 # AndroidTestApp
-AndroidTestApp
+AndroidTestApp [WORK IN PROGRESS]
 
 It's a simple 2 view application i made for a job candidature. 
 
