@@ -1,5 +1,7 @@
 package com.example.nelson.data.repository.datasource;
 
+import android.util.Log;
+
 import com.example.nelson.data.entity.GameDataEntity;
 import com.example.nelson.data.model.NetworkAPI;
 import com.example.nelson.data.model.NetworkService;
@@ -25,6 +27,7 @@ class GameDataStoreImpl implements GameDataStore {
 
   @Override
   public Observable<GameDataEntity> gameDataEntity() {
+    Log.d("NELSON", "GameDataStoreImpl, gameDataEntity()" );
     return (Observable<GameDataEntity>) networkService.getPreparedObservable(
         networkService.getAPI().getGameDataResponseObservable(),
         GameDataEntity.class);

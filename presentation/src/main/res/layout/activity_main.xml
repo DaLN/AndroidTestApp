@@ -10,19 +10,19 @@
     tools:context="com.example.nelson.presentation.activity.MainActivity"
     android:id="@+id/activityMain">
 
-    <include layout="@layout/activity_header"
-        android:id="@+id/activity_header"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/activity_headerContainer"
+        tools:background="@android:color/holo_red_light"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/activity_header"
-        android:id="@+id/fragmentContainer"
-        tools:background="@color/colorPrimary">
-
-    </RelativeLayout>
-
-
+        android:layout_below="@+id/activity_headerContainer"
+        android:id="@+id/activity_contentContainer"
+        tools:background="@android:color/holo_blue_light"/>
 </RelativeLayout>

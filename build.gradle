@@ -17,6 +17,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -38,13 +39,15 @@ project.ext {
     picassoVersion =                    '2.5.2'
     rxAndroidVersion =                  '1.2.1'
     rxJavaVersion =                     '1.1.6'
-    mockitoVersion =                    '1.9.5'
-    dexmakerVersion =                   '1.0'
+    mockitoVersion =                    '1.10.19'
+    dexmakerVersion =                   '1.4'
     espressoVersion =                   '2.0'
     testingSupportLibVersion =          '0.1'
     leakCanaryVersion =                 '1.3.1'
     gsonVersion =                       '2.3'
     robolectricVersion =                '3.0'
+    daggerMockVersion =                 '0.6.2'
+    parcelerVersion =                   '1.1.5'
 
     moduleDependencies = [
             appCompatV7 :               "com.android.support:appcompat-v7:${androidSupportVersion}",
@@ -65,11 +68,16 @@ project.ext {
             gson:                       "com.google.code.gson:gson:${gsonVersion}",
             robolectric:                "org.robolectric:robolectric:${robolectricVersion}",
             mockito:                    "org.mockito:mockito-core:${mockitoVersion}",
-            dexmaker:                   "com.google.dexmaker:dexmaker:${dexmakerVersion}",
-            dexmakerMockito:            "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+            dexmaker:                   "com.crittercism.dexmaker:dexmaker:${dexmakerVersion}",
+            dexmakerMockito:            "com.crittercism.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+            dexmakerDx:                 "com.crittercism.dexmaker:dexmaker-dx:${dexmakerVersion}",
             espresso:                   "com.android.support.test.espresso:espresso-core:${espressoVersion}",
             testingSupportLib:          "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
             leakCanary:                 "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+            daggerMock:                 "com.github.fabioCollini:DaggerMock:${daggerMockVersion}",
+            parcelerApi:                "org.parceler:parceler-api:${parcelerVersion}",
+            parceler:                   "org.parceler:parceler:${parcelerVersion}"
+
     ]
 }
 

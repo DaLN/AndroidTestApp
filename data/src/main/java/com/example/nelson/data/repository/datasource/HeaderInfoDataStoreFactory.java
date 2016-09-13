@@ -11,12 +11,10 @@ import javax.inject.Singleton;
 /**
  * Factory that creates different implementations of {@link GameDataStore}.
  */
-@Singleton
 public class HeaderInfoDataStoreFactory {
 
   private final Context context;
 
-  @Inject
   public HeaderInfoDataStoreFactory(@NonNull Context context) {
     this.context = context.getApplicationContext();
   }

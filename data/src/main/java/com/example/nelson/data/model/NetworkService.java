@@ -49,7 +49,6 @@ public class NetworkService {
 
   private Context context;
 
-  @Inject
   public NetworkService(Context context) {
     this.context = context;
     String baseUrl = "https://dl.dropboxusercontent.com/s/";
@@ -85,6 +84,7 @@ public class NetworkService {
    */
   public Observable<? extends TestResponse> getPreparedObservable(
       Observable<? extends TestResponse> unPreparedObservable, final Class<?> clazz) {
+    Log.d("NELSON", "NetworkService, getPreparedObservable()" );
     Observable<? extends TestResponse> preparedObservable =
         apiObservables.get(NetworkAPI.class);
 

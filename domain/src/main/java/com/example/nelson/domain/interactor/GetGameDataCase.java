@@ -1,5 +1,7 @@
 package com.example.nelson.domain.interactor;
 
+import android.util.Log;
+
 import com.example.nelson.domain.GameData;
 import com.example.nelson.domain.executor.PostExecutionThread;
 import com.example.nelson.domain.executor.ThreadExecutor;
@@ -17,15 +19,14 @@ public class GetGameDataCase extends UseCase {
 
   private final GameDataRepository gameDataRepository;
 
-  @Inject
-  public GetGameDataCase(GameDataRepository gameDataRepository, ThreadExecutor threadExecutor,
-                         PostExecutionThread postExecutionThread) {
-    super(threadExecutor, postExecutionThread);
+  public GetGameDataCase(GameDataRepository gameDataRepository) {
+    super();
     this.gameDataRepository = gameDataRepository;
   }
 
   @Override
   public Observable<GameData> buildUseCaseObservable() {
+    Log.d("NELSON", "GetGameDataCase, buildUseCaseObservable");
     return this.gameDataRepository.gamedata();
   }
 }
