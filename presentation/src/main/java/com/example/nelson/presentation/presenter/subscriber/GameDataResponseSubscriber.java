@@ -1,13 +1,13 @@
 package com.example.nelson.presentation.presenter.subscriber;
 
+import android.util.Log;
+
 import com.example.nelson.domain.GameData;
 import com.example.nelson.domain.exception.DefaultErrorBundle;
 import com.example.nelson.domain.interactor.DefaultSubscriber;
+import com.example.nelson.presentation.mapper.GameDataModelDataMapper;
 import com.example.nelson.presentation.mapper.ScoreModelDataMapper;
-import com.example.nelson.presentation.model.ScoreModel;
 import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
-
-import java.util.List;
 
 /**
  * Created by Nelson on 14/08/2016.
@@ -16,12 +16,12 @@ public class GameDataResponseSubscriber extends DefaultSubscriber<GameData> {
 
 
   private GameDataPresenterImpl mainPresenter;
-  private ScoreModelDataMapper scoreModelDataMapper;
+  private GameDataModelDataMapper gameDataModelDataMapper;
 
   public GameDataResponseSubscriber(GameDataPresenterImpl mainPresenter,
-                                    ScoreModelDataMapper scoreModelDataMapper) {
+                                    GameDataModelDataMapper gameDataModelDataMapper) {
     this.mainPresenter = mainPresenter;
-    this.scoreModelDataMapper = scoreModelDataMapper;
+    this.gameDataModelDataMapper = gameDataModelDataMapper;
   }
 
   /**
@@ -29,6 +29,7 @@ public class GameDataResponseSubscriber extends DefaultSubscriber<GameData> {
    */
   @Override
   public void onCompleted() {
+    Log.i("NELSON", "GameDataResponseSubscriber, onCompleted ");
   }
 
   /**
@@ -36,6 +37,7 @@ public class GameDataResponseSubscriber extends DefaultSubscriber<GameData> {
    */
   @Override
   public void onError(Throwable e) {
+    Log.e("NELSON", "GameDataResponseSubscriber, onError -> " + e.toString(), e);
     mainPresenter.showErrorMessage(new DefaultErrorBundle((Exception) e));
   }
 
@@ -45,7 +47,7 @@ public class GameDataResponseSubscriber extends DefaultSubscriber<GameData> {
    */
   @Override
   public void onNext(GameData gameData) {
-    mainPresenter.updateViewWithScores(
-        (List<ScoreModel>) scoreModelDataMapper.transform(gameData.getScoreList()));
+    Log.i("NELSON", "GameDataResponseSubscriber, onNext -> " + gameData.toString());
+    mainPresenter.updateViewWithGameData(gameDataModelDataMapper.transform(gameData));
   }
 }

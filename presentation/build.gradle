@@ -47,6 +47,11 @@ dependencies {
     //Picasso
     compile moduleDependencies.picasso
 
+    //Parceler
+    apt moduleDependencies.parceler
+    compile moduleDependencies.parcelerApi
+
+
     /**
      * Tests
      */
@@ -69,4 +74,5 @@ dependencies {
      * Development
      */
     compile moduleDependencies.leakCanary
+    compile 'org.jetbrains:annotations-java5:15.0'
 }

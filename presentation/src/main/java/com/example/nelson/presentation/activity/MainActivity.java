@@ -32,10 +32,6 @@ import butterknife.ButterKnife;
 @Singleton
 public class MainActivity extends ComponentCacheActivity {
 
-  @Inject
-  GameDataPresenter mainPresenter;
-
-  @Inject
   public MainActivity() {
   }
 
@@ -46,10 +42,7 @@ public class MainActivity extends ComponentCacheActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
     ButterKnife.bind(this);
-
-    mainPresenter.setMainActivity(this);
 
     if (findViewById(R.id.activity_contentContainer) != null) {
       if (savedInstanceState != null) {
@@ -57,7 +50,6 @@ public class MainActivity extends ComponentCacheActivity {
       }
 
       HeaderInfoFragment headerInfoFragment = new HeaderInfoFragment();
-      headerInfoFragment.setArguments(getIntent().getExtras());
       headerInfoFragment.setArguments(getIntent().getExtras());
       getSupportFragmentManager().beginTransaction()
           .add(R.id.activity_headerContainer, headerInfoFragment).commit();
@@ -71,45 +63,4 @@ public class MainActivity extends ComponentCacheActivity {
   }
 
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  protected void onDestroy() {
-    mainPresenter.rxUnSubscribe();
-    super.onDestroy();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  protected void onPause() {
-    mainPresenter.rxUnSubscribe();
-    super.onPause();
-  }
-
-  public void refreshHeaderInfo(HeaderInfoModel headerInfoModel) {
-    Picasso
-        .with(this)
-        .load(String.valueOf(headerInfoModel.getAvatarURL()))
-        .into(userAvatarView);
-    playerNameView.setText(headerInfoModel.getPlayerName());
-
-    NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-    balancePlayerView.setText(numberFormat.format(headerInfoModel.getBalance()));
-
-    DateFormat dateFormat =
-        SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM,
-            Locale.getDefault());
-    lastLoginDateView.setText(dateFormat.format(headerInfoModel.getLastLogindate()));
-  }
-
-  public void showLastLoginDate() {
-    this.lastLoginDateView.setVisibility(View.VISIBLE);
-  }
-
-  public void hideLastLoginDate() {
-    this.lastLoginDateView.setVisibility(View.GONE);
-  }
 }

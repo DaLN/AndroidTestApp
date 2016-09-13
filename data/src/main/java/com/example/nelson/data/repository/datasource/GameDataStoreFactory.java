@@ -11,7 +11,6 @@ import javax.inject.Singleton;
 /**
  * Factory that creates different implementations of {@link GameDataStore}.
  */
-@Singleton
 public class GameDataStoreFactory {
 
   private final Context context;

@@ -47,9 +47,9 @@ public interface LceView<D extends EmptyViewModel, E> extends View {
   /**
    * Show an error message
    *
-   * @param message Error message.
+   * @param gameDataError Error message.
    */
-  void showError(String message);
+  void showError(E gameDataError);
 
   /**
    * Get a {@link android.content.Context}.

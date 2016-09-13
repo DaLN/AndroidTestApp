@@ -1,8 +1,7 @@
 package com.example.nelson.presentation;
 
-
-import com.example.nelson.presentation.model.GameDataModel;
-import com.example.nelson.presentation.view.GameDataView;
+import com.example.nelson.presentation.model.HeaderInfoModel;
+import com.example.nelson.presentation.view.HeaderInfoView;
 
 import org.parceler.Parcel;
 import org.parceler.ParcelConstructor;
@@ -11,7 +10,7 @@ import org.parceler.ParcelConstructor;
  * Created by Nelson on 04/09/2016.
  */
 @Parcel(Parcel.Serialization.BEAN)
-public class GameDataViewState implements ViewState<GameDataView> {
+public class HeaderInfoViewState implements ViewState<HeaderInfoView> {
 
   private static final int STATE_UNINITIALIZED = -1;
   private static final int STATE_DEFAULT = 0;
@@ -19,22 +18,23 @@ public class GameDataViewState implements ViewState<GameDataView> {
   private static final int STATE_SHOW_ERROR = 2;
 
   private int currentState = STATE_DEFAULT;
-  private GameDataView.GameDataError error;
-  private GameDataModel model;
+  private HeaderInfoView.HeaderInfoError error;
+  private HeaderInfoModel model;
 
-  public GameDataViewState() {
+  public HeaderInfoViewState() {
     currentState = STATE_UNINITIALIZED;
   }
 
   @ParcelConstructor
-  public GameDataViewState(int currentState, GameDataView.GameDataError error,
-                           GameDataModel model) {
+  public HeaderInfoViewState(int currentState,
+                             HeaderInfoView.HeaderInfoError error,
+                             HeaderInfoModel model) {
     this.currentState = currentState;
     this.error = error;
     this.model = model;
   }
 
-  public void setData(GameDataModel model) {
+  public void setData(HeaderInfoModel model) {
     this.model = model;
   }
 
@@ -53,25 +53,25 @@ public class GameDataViewState implements ViewState<GameDataView> {
     }
   }
 
-  public void setStateShowError(GameDataView.GameDataError error) {
+  public void setStateShowError(HeaderInfoView.HeaderInfoError error) {
     currentState = STATE_SHOW_ERROR;
     this.error = error;
-  }
-
-  public GameDataModel getModel() {
-    return model;
   }
 
   public int getCurrentState() {
     return currentState;
   }
 
-  public GameDataView.GameDataError getError() {
+  public HeaderInfoView.HeaderInfoError getError() {
     return error;
   }
 
+  public HeaderInfoModel getModel() {
+    return model;
+  }
+
   @Override
-  public void apply(GameDataView view) {
+  public void apply(HeaderInfoView view) {
     if (model != null) {
       view.setData(model);
       view.showContent();

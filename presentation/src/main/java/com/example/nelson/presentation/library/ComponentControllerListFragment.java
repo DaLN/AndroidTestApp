@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 
-public abstract class ComponentControllerFragment<C> extends Fragment {
+public abstract class ComponentControllerListFragment<C> extends ListFragment {
     private ComponentCache componentCache;
     private ComponentControllerDelegate<C> componentDelegate = new ComponentControllerDelegate<>();
 

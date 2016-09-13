@@ -1,5 +1,7 @@
 package com.example.nelson.data.repository;
 
+import android.util.Log;
+
 import com.example.nelson.data.entity.GameDataEntity;
 import com.example.nelson.data.entity.mapper.GameDataEntityMapper;
 import com.example.nelson.data.repository.datasource.GameDataStore;
@@ -30,6 +32,7 @@ public class GameDataRepositoryImpl implements GameDataRepository {
   }
 
   public Observable<GameData> gamedata() {
+    Log.d("NELSON", "GameDataRepositoryImpl, gamedata()" );
     GameDataStore gameDataStore = this.gameDataStoreFactory.createDataStore();
     return gameDataStore.gameDataEntity().map(new Func1<GameDataEntity, GameData>() {
       @Override
@@ -38,6 +41,7 @@ public class GameDataRepositoryImpl implements GameDataRepository {
           return gameDataEntityMapper.transform(gameDataEntity);
         } catch (ParseException e) {
           //RxJava will catch the error.
+          Log.e("NELSON", e.getLocalizedMessage(), e);
           throw new RuntimeException(e.getLocalizedMessage(), e);
         }
       }

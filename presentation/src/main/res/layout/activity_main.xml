@@ -13,15 +13,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
         android:id="@+id/activity_headerContainer"
         tools:background="@android:color/holo_red_light"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/activity_headerContainer"
         android:id="@+id/activity_contentContainer"

@@ -3,12 +3,17 @@ package com.example.nelson.presentation.model;
 
 import com.example.nelson.presentation.view.model.EmptyViewModel;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+
+import java.io.Serializable;
 import java.net.URL;
 import java.util.Date;
 
 /**
  * Created by Nelson on 13/08/2016.
  */
+@Parcel(Parcel.Serialization.BEAN)
 public class HeaderInfoModel extends EmptyViewModel {
 
     String playerName;
@@ -19,6 +24,7 @@ public class HeaderInfoModel extends EmptyViewModel {
 
     Date lastLogindate;
 
+    @ParcelConstructor
     public HeaderInfoModel(String playerName, int balance, URL avatarURL, Date lastLogindate) {
         this.playerName = playerName;
         this.balance = balance;

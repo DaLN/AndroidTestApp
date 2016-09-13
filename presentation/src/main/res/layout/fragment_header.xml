@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.example.nelson.presentation.view.fragment.HeaderInfoLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:id="@+id/header"
-    tools:background="@color/colorAccent">
+    tools:background="@android:color/holo_purple">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -50,4 +50,38 @@
         android:layout_alignLeft="@+id/balancePlayerText"
         android:layout_alignStart="@+id/balancePlayerText"
         android:textAppearance="@android:style/TextAppearance.Medium"/>
-</RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_progress_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_retry_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        >
+
+        <Button
+            android:id="@+id/bt_retry"
+            style="@style/AppTheme.Button"
+            android:text="@string/btn_text_retry"
+            />
+
+    </RelativeLayout>
+</com.example.nelson.presentation.view.fragment.HeaderInfoLayout>

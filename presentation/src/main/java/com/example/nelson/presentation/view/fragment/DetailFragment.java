@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.nelson.presentation.DevTestApplication;
 import com.example.nelson.presentation.R;
 import com.example.nelson.presentation.navigator.NavigationManager;
-import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
+import com.example.nelson.presentation.presenter.GameDataPresenter;
 
 import javax.inject.Inject;
 
@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 public class DetailFragment extends Fragment {
 
   @Inject
-  GameDataPresenterImpl mainPresenter;
+  GameDataPresenter gameDataPresenter;
 
   @BindView(R.id.scoreNameText)
   TextView scoreNameText;
@@ -51,7 +51,7 @@ public class DetailFragment extends Fragment {
                            @Nullable Bundle savedInstanceState) {
     RelativeLayout view =
         (RelativeLayout) inflater.inflate(R.layout.fragment_score_details, container, false);
-
+    ButterKnife.bind(this, view);
     return view;
   }
 
@@ -61,10 +61,9 @@ public class DetailFragment extends Fragment {
   @Override
   public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    DevTestApplication.getDevTestApplication().getTestAppComponent().inject(this);
-    ButterKnife.bind(this, getActivity());
-    //mainPresenter.setLceView(this);
-    mainPresenter.hideLastLoginDate();
+    //DevTestApplication.getDevTestApplication().getTestAppComponent(getContext()).inject(this);
+    //gameDataPresenter.setLceView(this);
+    //gameDataPresenter.hideLastLoginDate();
     Bundle bundle = getArguments();
     scoreNameText.setText(bundle.getString(NavigationManager.NAME_FRAGMENT_ARGUMENT));
     scoreDateText.setText(bundle.getString(NavigationManager.DATE_FRAGMENT_ARGUMENT));
@@ -96,6 +95,6 @@ public class DetailFragment extends Fragment {
   @Override
   public void onDetach() {
     super.onDetach();
-    mainPresenter.showLastLoginDate();
+    //gameDataPresenter.showLastLoginDate();
   }
 }

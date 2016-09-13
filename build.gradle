@@ -47,6 +47,7 @@ project.ext {
     gsonVersion =                       '2.3'
     robolectricVersion =                '3.0'
     daggerMockVersion =                 '0.6.2'
+    parcelerVersion =                   '1.1.5'
 
     moduleDependencies = [
             appCompatV7 :               "com.android.support:appcompat-v7:${androidSupportVersion}",
@@ -74,6 +75,9 @@ project.ext {
             testingSupportLib:          "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
             leakCanary:                 "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
             daggerMock:                 "com.github.fabioCollini:DaggerMock:${daggerMockVersion}",
+            parcelerApi:                "org.parceler:parceler-api:${parcelerVersion}",
+            parceler:                   "org.parceler:parceler:${parcelerVersion}"
+
     ]
 }
 

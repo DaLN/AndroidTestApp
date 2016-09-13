@@ -1,22 +1,24 @@
 package com.example.nelson.presentation.presenter.subscriber;
 
+import android.util.Log;
+
 import com.example.nelson.domain.HeaderInfo;
 import com.example.nelson.domain.exception.DefaultErrorBundle;
 import com.example.nelson.domain.interactor.DefaultSubscriber;
 import com.example.nelson.presentation.mapper.HeaderInfoModelDataMapper;
-import com.example.nelson.presentation.presenter.GameDataPresenterImpl;
+import com.example.nelson.presentation.presenter.HeaderInfoPresenter;
 
 /**
  * Created by Nelson on 14/08/2016.
  */
 public class HeaderInfoResponseSubscriber extends DefaultSubscriber<HeaderInfo> {
 
-  private GameDataPresenterImpl mainPresenter;
+  private HeaderInfoPresenter headerInfoPresenter;
   private HeaderInfoModelDataMapper headerInfoModelDataMapper;
 
-  public HeaderInfoResponseSubscriber(GameDataPresenterImpl mainPresenter,
+  public HeaderInfoResponseSubscriber(HeaderInfoPresenter headerInfoPresenter,
                                       HeaderInfoModelDataMapper headerInfoModelDataMapper) {
-    this.mainPresenter = mainPresenter;
+    this.headerInfoPresenter = headerInfoPresenter;
     this.headerInfoModelDataMapper = headerInfoModelDataMapper;
   }
 
@@ -25,6 +27,8 @@ public class HeaderInfoResponseSubscriber extends DefaultSubscriber<HeaderInfo> 
    */
   @Override
   public void onCompleted() {
+    Log.i("NELSON", "HeaderInfoResponseSubscriber, onCompleted ");
+
   }
 
   /**
@@ -32,7 +36,8 @@ public class HeaderInfoResponseSubscriber extends DefaultSubscriber<HeaderInfo> 
    */
   @Override
   public void onError(Throwable e) {
-    mainPresenter.showErrorMessage(new DefaultErrorBundle((Exception) e));
+    Log.e("NELSON", "HeaderInfoResponseSubscriber, onError -> " + e.getLocalizedMessage(), e);
+    headerInfoPresenter.showErrorMessage(new DefaultErrorBundle((Exception) e));
   }
 
   /**
@@ -40,6 +45,7 @@ public class HeaderInfoResponseSubscriber extends DefaultSubscriber<HeaderInfo> 
    */
   @Override
   public void onNext(HeaderInfo headerInfo) {
-    mainPresenter.updateActivityWithHeaderInfo(headerInfoModelDataMapper.transform(headerInfo));
+    Log.i("NELSON", "HeaderInfoResponseSubscriber, onNext, headerInfo = " + headerInfo.toString());
+    headerInfoPresenter.updateViewWithHeaderInfo(headerInfoModelDataMapper.transform(headerInfo));
   }
 }

@@ -1,123 +1,205 @@
 package com.example.nelson.presentation;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.example.nelson.domain.exception.ErrorBundle;
+import com.example.nelson.presentation.library.PresenterBundle;
 import com.example.nelson.presentation.model.GameDataModel;
 import com.example.nelson.presentation.presenter.GameDataPresenter;
 import com.example.nelson.presentation.view.GameDataView;
-import com.example.nelson.presentation.view.LceView;
+
+import org.parceler.Parcels;
+
+import javax.inject.Named;
 
 /**
  * Created by Nelson on 04/09/2016.
  */
 public class GameDataCommunicationBus implements GameDataView, GameDataPresenter {
 
-  private GameDataView view;
-  private GameDataPresenter presenter;
-  private static final String VIEW_STATE_KEY = "VIEW_STATE";
-  private GameDataViewState viewState;
+  private GameDataView mView;
 
-  public GameDataCommunicationBus(GameDataPresenter presenter) {
-    this.presenter = presenter;
-    viewState = createViewState();
-    presenter.bindView(this);
+  @Named("presenter")
+  private GameDataPresenter mPresenter;
+
+  private static final String VIEW_STATE_KEY = "VIEW_STATE";
+  private GameDataViewState mViewState;
+
+  public GameDataCommunicationBus(GameDataPresenter mPresenter) {
+    this.mPresenter = mPresenter;
+    mViewState = createViewState();
+    mView = DetachedGameDataView.getInstance();
+    mPresenter.bindView(this);
   }
 
+  @org.jetbrains.annotations.Contract(" -> !null")
   private GameDataViewState createViewState() {
     return new GameDataViewState();
   }
 
   @Override
   public void showLoading() {
-    if (view != null) {
-      view.showLoading();
-    }
+    Log.d("NELSON", "GameDataCommunicationBus, showLoading");
+    mViewState.setStateShowLoading();
+    mView.showLoading();
   }
 
   @Override
   public void hideLoading() {
-    if (view != null) {
-      view.hideLoading();
-    }
+    Log.d("NELSON", "GameDataCommunicationBus, hideLoading");
+    mViewState.setStateHideLoading();
+    mView.hideLoading();
   }
 
   @Override
   public void setData(GameDataModel data) {
-    if(view != null) {
-      view.setData(data);
-    }
+    Log.d("NELSON", "GameDataCommunicationBus, setData, data = " + data.toString());
+    mViewState.setData(data);
+    mView.setData(data);
   }
 
   @Override
   public void loadData() {
-    if (view != null) {
-      view.loadData();
-    }
-
+    Log.d("NELSON", "GameDataCommunicationBus, loadData, mView = " + mView.toString());
+    mView.loadData();
   }
 
   @Override
   public void showContent() {
-    if (view != null) {
-      view.showContent();
-    }
+    Log.d("NELSON", "GameDataCommunicationBus, showContent");
+    mViewState.setStateShowContent();
+    mView.showContent();
   }
 
   @Override
   public void showRetry() {
-    if (view != null) {
-      view.showRetry();
-    }
+    mView.showRetry();
   }
 
   @Override
   public void hideRetry() {
-    if (view != null) {
-      view.hideRetry();
-    }
+    mView.hideRetry();
   }
 
   @Override
-  public void showError(String message) {
-    if (view != null) {
-      view.showError(message);
-    }
+  public void showError(GameDataView.GameDataError gameDataError) {
+    mViewState.setStateShowError(gameDataError);
+    mView.showError(gameDataError);
   }
 
   @Override
   public Context getContext() {
-    Context context = null;
-    if (view != null) {
-      context = view.getContext();
-    }
-    return context;
+    return mView.getContext();
   }
 
+  // PRESENTER
+
   @Override
-  public void bindView(LceView view) {
-    this.view = (GameDataView) view;
+  public void bindView(GameDataView view) {
+    mViewState.apply(view);
+    this.mView = view;
+    Log.d("NELSON", "GameDataCommunicationBus, bindView, view = " + view.toString()
+        + "this.mView = " + this.mView.toString());
   }
 
   @Override
   public void unbindView() {
-    this.view = null;
+    this.mView = DetachedGameDataView.getInstance();
   }
 
   @Override
-  public void onCreate(@Nullable Bundle arguments, @Nullable Bundle savedInstanceState) {
-    presenter.onCreate(arguments, savedInstanceState);
+  public void showErrorMessage(ErrorBundle defaultErrorBundle) {
+
+  }
+
+
+  @Override
+  public void onCreate(@Nullable PresenterBundle bundle) {
+    mPresenter.onCreate(bundle);
+    if (bundle != null) {
+      mViewState = (GameDataViewState) bundle.getSerializable(VIEW_STATE_KEY);
+    }
   }
 
   @Override
-  public void onSaveInstanceState(Bundle bundle) {
-    presenter.onSaveInstanceState(bundle);
+    public void onSaveInstanceState(PresenterBundle bundle) {
+    mPresenter.onSaveInstanceState(bundle);
+    bundle.putParcelable(VIEW_STATE_KEY, Parcels.wrap(mViewState));
   }
 
   @Override
   public void onDestroy() {
-    presenter.unbindView();
-    presenter.onDestroy();
+    mPresenter.unbindView();
+    mPresenter.onDestroy();
+  }
+
+  @Override
+  public void callGameData() {
+    mPresenter.callGameData();
+  }
+
+  @Override
+  public void updateViewWithGameData(GameDataModel gameDataModel) {
+    Log.d("Nelson", "GameDataCommunicationBus, updateViewWithGameData, gameDataModel = " + gameDataModel.toString());
+    mPresenter.updateViewWithGameData(gameDataModel);
+  }
+
+  /**
+   * Null Object Pattern
+   */
+  private static class DetachedGameDataView implements GameDataView {
+
+    private static final DetachedGameDataView view = new DetachedGameDataView();
+
+    public static DetachedGameDataView getInstance() {
+      return view;
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void setData(GameDataModel data) {
+
+    }
+
+    @Override
+    public void loadData() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showRetry() {
+
+    }
+
+    @Override
+    public void hideRetry() {
+
+    }
+
+    @Override
+    public void showError(GameDataError gameDataError) {
+
+    }
+
+    @Override
+    public Context getContext() {
+      return null;
+    }
   }
 }

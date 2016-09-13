@@ -3,20 +3,25 @@ package com.example.nelson.presentation.presenter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.example.nelson.domain.exception.ErrorBundle;
 import com.example.nelson.domain.executor.PostExecutionThread;
 import com.example.nelson.domain.executor.ThreadExecutor;
 import com.example.nelson.domain.interactor.UseCase;
+import com.example.nelson.presentation.activity.MainActivity;
 import com.example.nelson.presentation.library.PresenterBundle;
-import com.example.nelson.presentation.mapper.GameDataModelDataMapper;
+import com.example.nelson.presentation.mapper.HeaderInfoModelDataMapper;
 import com.example.nelson.presentation.mapper.ScoreModelDataMapper;
-import com.example.nelson.presentation.model.GameDataModel;
+import com.example.nelson.presentation.model.HeaderInfoModel;
+import com.example.nelson.presentation.model.ScoreModel;
 import com.example.nelson.presentation.presenter.subscriber.GameDataResponseSubscriber;
+import com.example.nelson.presentation.presenter.subscriber.HeaderInfoResponseSubscriber;
 import com.example.nelson.presentation.utils.RxTransformers;
 import com.example.nelson.presentation.view.GameDataView;
+import com.example.nelson.presentation.view.HeaderInfoView;
 
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,21 +34,19 @@ import rx.subscriptions.CompositeSubscription;
  * Created by Nelson on 13/08/2016.
  */
 @Singleton
-public class GameDataPresenterImpl implements GameDataPresenter {
+public class HeaderInfoPresenterImpl implements HeaderInfoPresenter {
 
-  private GameDataView mView;
+  private HeaderInfoView mView;
 
-  private UseCase getGameDataCase;
-
+  private UseCase getHeaderInfoCase;
   private ThreadExecutor threadExecutor;
   private PostExecutionThread postExecutionThread;
   private CompositeSubscription subscriptions;
 
-  @Inject
-  public GameDataPresenterImpl(@Named("gameData") UseCase getGameDataCase,
-                               ThreadExecutor threadExecutor,
-                               PostExecutionThread postExecutionThread) {
-    this.getGameDataCase = getGameDataCase;
+  public HeaderInfoPresenterImpl(UseCase getHeaderInfoCase,
+                                 ThreadExecutor threadExecutor,
+                                 PostExecutionThread postExecutionThread) {
+    this.getHeaderInfoCase = getHeaderInfoCase;
     this.threadExecutor = threadExecutor;
     this.postExecutionThread = postExecutionThread;
     subscriptions = new CompositeSubscription();
@@ -51,7 +54,7 @@ public class GameDataPresenterImpl implements GameDataPresenter {
 
 
   @Override
-  public void bindView(GameDataView view) {
+  public void bindView(HeaderInfoView view) {
     this.mView = view;
   }
 
@@ -61,9 +64,8 @@ public class GameDataPresenterImpl implements GameDataPresenter {
   }
 
   @Override
-  public void onCreate(@Nullable PresenterBundle bundle) {
-    Log.d("NELSON", "GameDataPresenterImpl, onCreate, bundle = " + (bundle != null ? bundle.toString() : null));
-    if (bundle == null) {
+  public void onCreate(PresenterBundle presenterBundle) {
+    if (presenterBundle == null) {
       mView.loadData();
     }
   }
@@ -75,38 +77,34 @@ public class GameDataPresenterImpl implements GameDataPresenter {
 
   @Override
   public void onDestroy() {
-    if (subscriptions != null && !subscriptions.isUnsubscribed()) {
+    if (subscriptions.hasSubscriptions()) {
       subscriptions.unsubscribe();
     }
   }
 
-  public void callGameData() {
-    Log.d("NELSON", "GameDataPresenterImpl, callGameData");
 
+  public void callData() {
     hideViewRetry();
-    loadGameData();
+    showViewLoading();
+    loadHeaderInfo();
   }
 
   @SuppressWarnings("unchecked")
-  private void loadGameData() {
-    Log.d("NELSON", "GameDataPresenterImpl loadGameData, START");
-
-    subscriptions.add(
-        getGameDataCase.buildUseCaseObservable()
-            .subscribeOn(Schedulers.from(threadExecutor))
-            .observeOn(postExecutionThread.getScheduler())
-            .compose(RxTransformers.applyOpBeforeAndAfter(showViewLoading(), hideViewLoading()))
-            .subscribe(new GameDataResponseSubscriber(this, new GameDataModelDataMapper()))
-    );
-    Log.d("NELSON", "GameDataPresenterImpl loadGameData, subscriptions = " + subscriptions.toString());
-
+  private void loadHeaderInfo() {
+    subscriptions.add(getHeaderInfoCase
+        .buildUseCaseObservable()
+        .subscribeOn(Schedulers.from(threadExecutor))
+        .observeOn(postExecutionThread.getScheduler())
+        .compose(RxTransformers.applyOpBeforeAndAfter(showViewLoading(), hideViewLoading()))
+        .subscribe(new HeaderInfoResponseSubscriber(this, new HeaderInfoModelDataMapper())));
   }
 
-  public void updateViewWithGameData(GameDataModel gameDataModel) {
-    Log.d("NELSON", "GameDataPresenterImpl updateViewWithGameData, gameDataModel = " + gameDataModel.toString());
-    mView.setData(gameDataModel);
+
+  public void updateViewWithHeaderInfo(HeaderInfoModel headerInfoModel) {
+    mView.setData(headerInfoModel);
     mView.showContent();
   }
+
 
   private Runnable showViewLoading() {
     return new Runnable() {
@@ -118,6 +116,7 @@ public class GameDataPresenterImpl implements GameDataPresenter {
   }
 
   private Runnable hideViewLoading() {
+    this.mView.hideLoading();
     return new Runnable() {
       @Override
       public void run() {
@@ -146,16 +145,16 @@ public class GameDataPresenterImpl implements GameDataPresenter {
 
   public void showErrorMessage(ErrorBundle errorBundle) {
     showViewRetry().run();
+    showViewRetry().run();
     // Error is always general.
-    mView.showError(GameDataView.GameDataError.GENERAL);
+    mView.showError(HeaderInfoView.HeaderInfoError.GENERAL);
   }
 
   public void showLastLoginDate() {
-    //TODO tell other fragment to show login date
+    this.mView.showLastLoginDate();
   }
 
   public void hideLastLoginDate() {
-    //TODO tell other fragment to hide login date
+    this.mView.hideLastLoginDate();
   }
-
 }
